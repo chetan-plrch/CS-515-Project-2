@@ -25,4 +25,6 @@ class Evaluate:
             right = self.evaluate(cur_node.get('right'))
             operator = cur_node.get('operator')
             return self.operate(left, right, operator)
+        else:
+            raise Exception('Unrecognized type during evaluation!')
 

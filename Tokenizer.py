@@ -95,10 +95,7 @@ class Tokenizer:
                 if match:
                     if token_type:
                         token = Token(token_type, match.group())
-                        self.tokens.append((
-                            token.get_type(),
-                            token.get_value()
-                        ))
+                        self.tokens.append(( token.get_type(), token.get_value() ))
                     self.pos += len(match.group())
                     break
             else:
@@ -129,8 +126,6 @@ class Tokenizer:
                 if j > 0:
                     prev_type = token_values[i][j - 1][0]
                     cur_type = token_values[i][j][0]
-                    print(token_values[i][j - 1][1], token_values[i][j][1])
-                    print(f'{prev_type}-{cur_type}')
                     check_invalid_expr(f'{prev_type}-{cur_type}')
             i += 1
         return token_values

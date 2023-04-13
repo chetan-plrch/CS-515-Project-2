@@ -1,5 +1,0 @@
-x  = 3
-y  = 5
-z  = 2.00 + x * y
-z2 = (2+xhksdjhfkjhsdfhk)*y^5x
-z3 = --x+y+ ++y +++ 6

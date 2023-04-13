@@ -39,6 +39,28 @@ operand_type = {
 }
 
 
+def check_invalid_expr(type):
+    # Cases that are handled:
+    # ++x + ++y - Valid
+    # x++ + y++ - Valid
+    # ++x + y++ - Valid
+    # x++ + ++y - Valid
+    # ------ ------ ------
+    # ++x+++y - Not a valid case
+    # x+++y++ - Valid case
+    # ++x+y++ - Valid case
+    # x+++++y - Not a valid case
+
+    types = ['POST_INCREMENT', 'POST_DECREMENT', 'INCREMENT', 'DECREMENT']
+    combinations = []
+    for t1 in types:
+        for t2 in types:
+            combinations.append(f'{t1}-{t2}')
+
+    if type in combinations:
+        raise Exception('Two consecutive ++ -- found!')
+
+
 class Tokenizer:
     def __init__(self, text):
         self.tokens = []
@@ -48,8 +70,10 @@ class Tokenizer:
         self.token_map = [
             (r'[ \t]+', None),
             (r'\n', 'NEWLINE'),
-            (r'\+\+', 'INCREMENT'),
-            (r'--', 'DECREMENT'),
+            (r'[A-Za-z][A-Za-z0-9_]*\+\+', 'POST_INCREMENT'),
+            (r'[A-Za-z][A-Za-z0-9_]*\-\-', 'POST_DECREMENT'),
+            (r'\+\+', 'PRE_INCREMENT'),
+            (r'--', 'PRE_DECREMENT'),
             (r'\+', 'PLUS'),
             (r'-', 'MINUS'),
             (r'\*', 'MULTIPLY'),
@@ -83,40 +107,50 @@ class Tokenizer:
         self.tokens.append(( t.get_type(), t.get_value() ))
         return self.tokens
 
+    def create_tokens(self):
+        f = self.text
+        line_tokens = []
+        for line in f.splitlines():
+            line_tokens.append(Tokenizer(line).tokenize())
+        return line_tokens
 
-def create_tokens():
-    f = open('test_program.txt').read()
-    t = Tokenizer(f)
-    return t.tokenize()
+    def char_with_type_tokenized_lines(self):
+        line_tokens = self.create_tokens()
+        token_values = []
+        i = 0
+        for tokens in line_tokens:
+            token_values.append([])
+            for t in tokens:
+                ch = t[1]
+                if not ((ch == '\n') or (ch == None)):
+                    token_values[i].append(t)
+
+            for j in range(0, len(token_values[i])):
+                if j > 0:
+                    prev_type = token_values[i][j - 1][0]
+                    cur_type = token_values[i][j][0]
+                    print(token_values[i][j - 1][1], token_values[i][j][1])
+                    print(f'{prev_type}-{cur_type}')
+                    check_invalid_expr(f'{prev_type}-{cur_type}')
+            i += 1
+        return token_values
+
+    def char_without_type_tokenized_lines(self):
+        line_tokens = self.create_tokens()
+        token_values = []
+        i = 0
+        for tokens in line_tokens:
+            token_values.append([])
+            for t in tokens:
+                ch = t[1]
+                if not ((ch == '\n') or (ch == None)):
+                    token_values[i].append(ch)
+            i += 1
+        return token_values
 
 
-values = {
-    'x': 1,
-    'y': 2,
-    'z': 3,
-    'z1': 4,
-    'z2': 5,
-    'xhksdjhfkjhsdfhk': 8,
-    'z3': 6
-}
 
 
-def substitute_parse_values(token):
-    type, value = token
-    if type == 'NAME':
-        return 'NUMBER', float(values[value])
-    elif type == 'NUMBER':
-        return 'NUMBER', float(value)
-    return token
 
 
-def evaluation(tokens):
-    # Implement stack based parsing for evaluation
-    pass
-
-
-evaluation(create_tokens())
-
-
-# How to evluate an
 

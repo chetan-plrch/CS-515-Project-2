@@ -71,8 +71,14 @@ class Construct_AST:
         return ast_stack[0]
 
     def print_ast(self, node, prefix='', is_left=True):
-        if node.right:
-            self.print_ast(node.right, prefix + ('│   ' if is_left else '    '), False)
-        print(prefix + ('└── ' if is_left else '┌── ') + node.value)
-        if node.left:
-            self.print_ast(node.left, prefix + ('    ' if is_left else '│   '), True)
+        if node.get('right'):
+            self.print_ast(node['right'], prefix + ('│   ' if is_left else '    '), False)
+        if 'value' in node:
+            print(prefix + ('└── ' if is_left else '┌── ') + node['value'])
+        else:
+            print(prefix + ('└── ' if is_left else '┌── ') + node['operator'])
+        if node.get('left'):
+            self.print_ast(node['left'], prefix + ('    ' if is_left else '│   '), True)
+
+
+

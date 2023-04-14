@@ -19,7 +19,7 @@ class printer(object):
         if re.findall("\s*[+-*%/\\()]*\s"):
             pass
     
-    def __inside_stack_checker_pre(self,lookup,ops,operand):
+    def __inside_stack_checker_pre(self,lookup,ops,operand,symbol):
         # TODO add check for operand = constant
         """
         ### Funtion to handle the pre TODO try to integrate post in one
@@ -52,39 +52,71 @@ class printer(object):
         >>> x.stacker("z=-x")
         {'z': 0}
         """
-         
-        if ops=="++":
-            if operand in self.stacker_dict :
-                        self.stacker_dict[operand]=self.stacker_dict[operand]+1
-                        if operand==lookup:
-                            pass
-                        else:
-                            self.stacker_dict[lookup]=self.stacker_dict[operand] # can be redunant
-            elif lookup in self.stacker_dict:# To increment the value if already declared previously
-                        self.stacker_dict[lookup]=self.stacker_dict[lookup[0][0]]+1
-            else: # To make value 1 if the variable is not declared in it 
-                self.stacker_dict[lookup]=1
-            return True
-        elif ops=="--":
-            if operand in self.stacker_dict :
-                        self.stacker_dict[operand]=self.stacker_dict[operand]-1
-                        if operand==lookup:
-                            pass
-                        else:
-                            self.stacker_dict[lookup]=self.stacker_dict[operand]
-            elif lookup in self.stacker_dict:# 
-                        self.stacker_dict[lookup]=self.stacker_dict[lookup[0][0]]-1
-            else: # To make value 1 if the variable is not declared in it 
-                self.stacker_dict[lookup]=-1
-            return True
+        if symbol=="PRE_INCREMENT":    
+            if ops=="++":
+                if operand in self.stacker_dict :
+                            self.stacker_dict[operand]=self.stacker_dict[operand]+1
+                            if operand==lookup:
+                                pass
+                            else:
+                                self.stacker_dict[lookup]=self.stacker_dict[operand] # can be redunant
+                elif lookup in self.stacker_dict:# To increment the value if already declared previously
+                            self.stacker_dict[lookup]=self.stacker_dict[lookup[0][0]]+1
+                else: # To make value 1 if the variable is not declared in it 
+                    self.stacker_dict[lookup]=1
+                return self.stacker_dict[lookup]
+            elif ops=="--":
+                if operand in self.stacker_dict :
+                            self.stacker_dict[operand]=self.stacker_dict[operand]-1
+                            if operand==lookup:
+                                pass
+                            else:
+                                self.stacker_dict[lookup]=self.stacker_dict[operand]
+                elif lookup in self.stacker_dict:# 
+                            self.stacker_dict[lookup]=self.stacker_dict[lookup[0][0]]-1
+                else: # To make value 1 if the variable is not declared in it 
+                    self.stacker_dict[lookup]=-1
+                return self.stacker_dict[lookup]
+        elif symbol=="POST_INCREMENT":
+            if ops=="++":
+                if operand in self.stacker_dict :
+                    temp=self.stacker_dict[operand]
+                    self.stacker_dict[operand]=self.stacker_dict[operand]+1
+                    if operand==lookup:
+                        pass
+                    else:
+                        self.stacker_dict[lookup]=self.stacker_dict[operand] # can be redunant
+                elif lookup in self.stacker_dict:# To increment the value if already declared previously
+                    temp=self.stacker_dict[operand]
+                    self.stacker_dict[lookup]=self.stacker_dict[lookup[0][0]]+1
+                else: # To make value 1 if the variable is not declared in it 
+                    temp=0
+                    self.stacker_dict[lookup]=1
+                return temp
+            elif ops=="--":
+                if operand in self.stacker_dict :
+                    temp=self.stacker_dict[operand]
+                    self.stacker_dict[operand]=self.stacker_dict[operand]-1
+                    if operand==lookup:
+                        pass
+                    else:
+                        self.stacker_dict[lookup]=self.stacker_dict[operand]
+                elif lookup in self.stacker_dict:# 
+                    temp=self.stacker_dict[operand]
+                    self.stacker_dict[lookup]=self.stacker_dict[lookup[0][0]]-1
+                else: # To make value 1 if the variable is not declared in it 
+                    temp=0
+                    self.stacker_dict[lookup]=-1
+                return temp
+
         elif ops=="-": # unary handling
             if operand in self.stacker_dict:
                 # if lookup in self.stacker_dict:# To increment the value if already declared previously
                     self.stacker_dict[lookup]=self.stacker_dict[operand]*-1
-                
             else: # To make value 1 if the variable is not declared in it 
                     self.stacker_dict[lookup]=0
                     # BUG not working 
+            return self.stacker_dict[lookup]
         return False
         
     
@@ -100,7 +132,9 @@ class printer(object):
         >>> x.stacker("x=++x")
         {'x': 1}
 
-
+        >>> x=printer()
+        >>> x.stacker("x=x++")
+        inside this
         
         """
         x=re.findall("([a-zA-Z_])*\s*=\s*(.+)",liner)# assigning a value
@@ -112,14 +146,20 @@ class printer(object):
                 after_equals=re.findall("^\s*(\+\+|--|-)\s*([a-zA-Z][\w]*)$",x[0][1])# after equals declared to get the ops and 
                 ops=after_equals[0][0]
                 operand=after_equals[0][1]
-                self.__inside_stack_checker_pre(x[0][0],ops,operand)
-            print(self.stacker_dict)
-            # TODO create a code for handling post
-        # elif y :
+                result=self.__inside_stack_checker_pre(x[0][0],ops,operand,"PRE_INCREMENT")
+                print(result)
+                print(self.stacker_dict)
 
-        
-        
-        #     pass
+            # TODO create a code for handling post
+            elif re.match("^\s*([a-zA-Z][\w]*)\s*(\+\+|--)$",x[0][1]):
+                after_equals=re.findall("^\s*([a-zA-Z][\w]*)\s*(\+\+|--)$",x[0][1])# after equals declared to get the ops and 
+                operand=after_equals[0][0]
+                ops=after_equals[0][1]
+                result=self.__inside_stack_checker_pre(x[0][0],ops,operand,"POST_INCREMENT")
+                print(result)
+                print(self.stacker_dict)
+            
+            
 
 
 

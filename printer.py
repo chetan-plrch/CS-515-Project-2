@@ -108,15 +108,15 @@ class printer(object):
                     temp=0
                     self.stacker_dict[lookup]=-1
                 return temp
-
-        elif ops=="-": # unary handling
-            if operand in self.stacker_dict:
-                # if lookup in self.stacker_dict:# To increment the value if already declared previously
-                    self.stacker_dict[lookup]=self.stacker_dict[operand]*-1
-            else: # To make value 1 if the variable is not declared in it 
-                    self.stacker_dict[lookup]=0
-                    # BUG not working 
-            return self.stacker_dict[lookup]
+        elif symbol=="UNARY":
+            if ops=="-": # unary handling
+                if operand in self.stacker_dict:
+                    # if lookup in self.stacker_dict:# To increment the value if already declared previously
+                        self.stacker_dict[lookup]=self.stacker_dict[operand]*-1
+                else: # To make value 1 if the variable is not declared in it 
+                        self.stacker_dict[lookup]=0
+                        # BUG not working 
+                return self.stacker_dict[lookup]
         return False
         
     
@@ -158,8 +158,16 @@ class printer(object):
                 result=self.__inside_stack_checker_pre(x[0][0],ops,operand,"POST_INCREMENT")
                 print(result)
                 print(self.stacker_dict)
-            
-            
+
+            if re.findall("^\s*(-)\s*([a-zA-Z][\w]*)$",x[0][1]):# Code for handling ++,--,- value only
+                after_equals=re.findall("^\s*(-)\s*([a-zA-Z][\w]*)$",x[0][1])# after equals declared to get the ops and 
+                ops=after_equals[0][0]
+                operand=after_equals[0][1]
+                result=self.__inside_stack_checker_pre(x[0][0],ops,operand,"UNARY")
+                print(result)
+                print(self.stacker_dict)
+        # if re.match("^\s*(\+\+|--|-)\s*([a-zA-Z][\w]*)$|^\s*([a-zA-Z][\w]*)\s*(\+\+|--)$",liner):
+
 
 
 

@@ -1,0 +1,9 @@
+Get it checked by sir if undeclared variable should have the same response as the bc tool
+
+input : /x
+output : 1
+
+
+print based checkups like x=x+1
+
+(4 + 2) * (3 - 5) / 2 % 3 ^ 2 different value from when compared to bc and python 

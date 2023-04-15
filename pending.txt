@@ -7,3 +7,15 @@ output : 1
 print based checkups like x=x+1
 
 (4 + 2) * (3 - 5) / 2 % 3 ^ 2 different value from when compared to bc and python 
+
+# TODO what to do in case of single unary ? 
+
+what to do in case of -(y)^2
+
+in case -(y)
+
+# 37e6cf59-2005-4d99-a0c7-d16af26a72bb
+how to tackle unary operation in which it is the first thing in the an expression
+
+create test case to handle unary:
+)-

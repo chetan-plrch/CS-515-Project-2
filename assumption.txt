@@ -1,0 +1,6 @@
+Taking the assumption that in the case of undeclared varaible the initial values of the variable will be 0
+
+We are taking the assumption that in the unary 
+()+ -() will become () - ()
+& 
+() - -() will become () + ()

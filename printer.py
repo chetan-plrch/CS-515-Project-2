@@ -235,7 +235,7 @@ class Printer(object):
                 lookup=list_of_tokens[count+1][1]
                 operand=lookup
                 operation_system=list_of_tokens[count][0]
-                print(ops,lookup,operation_system)
+            
                 result = self.__inside_stack_checker_pre(
                     lookup, ops, operand, operation_system)
                 list_of_tokens.pop(count)
@@ -256,16 +256,12 @@ class Printer(object):
                     list_of_tokens[count-1]=("PLUS",'+')# converting - -() into + () 
                     list_of_tokens.pop(count)# poping it as redunant due to 
                 elif list_of_tokens[count+1][0]=="LPAREN":
-                    print(list_of_tokens)
-                    print("Inside this")
                     list_of_tokens.insert(count,("NUMBER","-1"))
-                    print(list_of_tokens.pop(count+1))
                     list_of_tokens.insert(count+1,("MULTIPLY","*"))
-                    
                     # list_of_tokens.pop(count)
 
             count = count+1
-        print(list_of_tokens)
+        return(list_of_tokens)
 
 
 # creating a helper function which will be integrated in the project2.py

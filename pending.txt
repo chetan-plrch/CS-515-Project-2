@@ -40,5 +40,8 @@ create test case to handle unary:
 
 * Imp Pending 
 1. Print 
+2. Inbuilt 
+3. Negation
+
 
 x+ min(z,y)

@@ -1,6 +1,7 @@
 import re
 import Tokenizer
 import ExpressionEvaluation
+# from extras import inbuilt_parser
 # TODO create function which will take out variable and put it to dictionary which acts like independent stack like in os
 # TODO create a function which will print the values of given command line
 import doctest
@@ -201,8 +202,33 @@ class Printer(object):
                 elif ops == "--":
                     result = self.__inside_stack_checker_pre(
                         lookup, ops, operand, "POST_INCREMENT")
-            print(result)
+            return result
 
+    def token_helper_of_helper_unary(self,count,list_of_tokens):
+                list_of_tokens.insert(count+1,("LPAREN","("))
+                list_of_tokens.insert(count+2,("NUMBER","-1"))
+                
+                list_of_tokens.insert(count+3,("MULTIPLY","*"))
+                
+                list_of_tokens.pop(count)
+                
+                if list_of_tokens[count+3][0]=="LPAREN":
+                    temp_count=0
+                    index_var=0
+                    for index,i in enumerate(list_of_tokens[count+3:]):
+                        if i[0]=="LPAREN":
+                            temp_count+=1
+                        if i[0]=="RPAREN":
+                            temp_count-=1
+                        if temp_count==0:
+                            index_var=index
+                            break
+                        
+                    list_of_tokens.insert(count+3+index_var,("RPAREN",")"))
+                else:
+                    list_of_tokens.insert(count+4,("RPAREN",")"))
+                return list_of_tokens
+        
     def token_helper_pre_post(self, list_of_tokens):
         """
         A function which will help the tokenizer.py
@@ -233,36 +259,19 @@ class Printer(object):
                     lookup, ops, operand, operation_system)
                 list_of_tokens.pop(count)
                 list_of_tokens[count]=("NUMBER",result)
-            # if list_of_tokens[count][0]=="MINUS":
-            #     # TODO case 1 : when there is number in front of the unary 
-            #     # TODO case 2 : when there is a LPAREN in front of the unary
-            #     # Case 1 : if there is + in front of unary convert + into -
-            #     # and if there is - infront of then convert into + 
-            #     if list_of_tokens[count+1][0]=="MINUS":
-            #     list_of_tokens.insert(count+1,("LPAREN","("))
-            #     list_of_tokens.insert(count+2,("NUMBER","-1"))
-                
-            #     list_of_tokens.insert(count+3,("MULTIPLY","*"))
-                
-            #     list_of_tokens.pop(count)
-                
-            #     if list_of_tokens[count+3][0]=="LPAREN":
-            #         temp_count=0
-            #         index_var=0
-            #         for index,i in enumerate(list_of_tokens[count+3:]):
-            #             if i[0]=="LPAREN":
-            #                 temp_count+=1
-            #             if i[0]=="RPAREN":
-            #                 temp_count-=1
-            #             if temp_count==0:
-            #                 index_var=index
-            #                 break
-                        
-            #         list_of_tokens.insert(count+3+index_var,("RPAREN",")"))
-            #     else:
-            #         list_of_tokens.insert(count+4,("RPAREN",")"))
+            if list_of_tokens[count][0]=="MINUS":
+                # TODO case 1 : when there is number in front of the unary 
+                # TODO case 2 : when there is a LPAREN in front of the unary
+                # Case 1 : if there is + in front of unary convert + into -
+                # and if there is - infront of then convert into + 
+                # if list_of_tokens[count+1][0]=="MINUS":
+                if count==0:
+                    list_of_tokens=self.token_helper_of_helper_unary(count,list_of_tokens)
+                elif list_of_tokens[count-1][0] in ['POWER','MULTIPLY','DIVIDE','MODULO','PLUS','MINUS','CONJUNCTION','DISJUNCTION']:
+                    list_of_tokens=self.token_helper_of_helper_unary(count,list_of_tokens)
+                elif list_of_tokens[count-1][0]=="LPAREN":
+                    list_of_tokens=self.token_helper_of_helper_unary(count,list_of_tokens)
                     
-                # print(list_of_tokens)
 
             if list_of_tokens[count][0]=="NAME":
                 if list_of_tokens[count][1] in self.stacker_dict.keys():
@@ -271,14 +280,12 @@ class Printer(object):
                     tempVar=0
                 list_of_tokens[count]=("NUMBER",str(tempVar))
                     # list_of_tokens.pop(count)
-            
+            if list_of_tokens[count][1]=="MIN":
+                for i in 
             count = count+1
         return(list_of_tokens)
     
-    # def printist(self,statement):
-    #     if re.match("^\s*print\s*(.+)\s*$",statement):
-    #         res_value=
-    #     pass
+ 
 
     def ops_extension(self,statement: str):
         """code to handle the ops_extension
@@ -290,8 +297,8 @@ class Printer(object):
             _type_: either a the new statement or False ( False means the pattern did not match )
         """
 
-        if re.match("^\s*([a-zA-Z][\w]*)\s*([\^|\+\-*\\\%])=(.+)$",statement):
-            op_manager=re.findall("^\s*([a-zA-Z][\w]*)\s*([\^|\+\-*\\\%])=(.+)$",statement)
+        if re.match("^\s*([a-zA-Z][\w]*)\s*([\^|\+\-*\\|\%|!]{1}|[&&|\|\|]{2})=(.+)$",statement):
+            op_manager=re.findall("^\s*([a-zA-Z][\w]*)\s*([\^|\+\-*\\|\%|!]{1}|[&&|\|\|]{2})=(.+)$",statement)
             res_value=op_manager[0][0]# LHS value
             operator=op_manager[0][1]# RHS Value
             new_statment=statement
@@ -304,7 +311,6 @@ class Printer(object):
                     position_at=index
                     new_statment=statement[:position_at]+statement[position_at+1:]
                     break
-            print(new_statment)
 
             # Adding the operation to RHS
 
@@ -337,17 +343,65 @@ class Printer(object):
             t= Tokenizer.Tokenizer(spliting_for_RHS_Eval[1])
             list_of_tokens=t.char_with_type_tokenized_lines()
             pre_post=self.token_helper_pre_post(list_of_tokens[0])
+         
             list(pre_post)
             pre_post=t.char_without_type_tokenized_line(pre_post)
+            
             evalu=ExpressionEvaluation.ExpressionEvaluation()
             result=evalu.evaluate_expression(pre_post)
             self.stacker_dict[spliting_for_RHS_Eval[0]]=result
             return(result)
             # TODO create the else
     
-    
+    def get_print_items(self,line):
+        m = re.match(f'\s*print\s*(.*)', line)
+        variables = m.group(1).split(',')
+        variables = list(map(lambda variable: variable.strip(), variables))
+        chetan_ke_wajah=[]
+        for i in variables:
+            try:
+                float(i)
+                is_numeric=True
+            except:
+                is_numeric=False
+            if is_numeric==True:
+             
+                chetan_ke_wajah.append(i)
+            elif re.match("^[A-Za-z][A-Za-z0-9_]*$",i):
+               
+                if i in self.stacker_dict.keys():
+                   
+                    chetan_ke_wajah.append(self.stacker_dict[i]) 
+                else:
+                    chetan_ke_wajah.append(0)
+            elif filter(lambda x: True if x in ["+","-","/","*","%","^","(",")","&","|","!"] else False,i):# TODO check this
+                
+                t= Tokenizer.Tokenizer(i)
+                list_of_tokens=t.char_with_type_tokenized_lines()
+                pre_post=self.token_helper_pre_post(list_of_tokens[0])
+                
+                list(pre_post)
+                pre_post=t.char_without_type_tokenized_line(pre_post)
+                
+                evalu=ExpressionEvaluation.ExpressionEvaluation()
+                result=evalu.evaluate_expression(pre_post)
+                chetan_ke_wajah.append(str(result))
+            else:
+                raise SyntaxError
             
+        return chetan_ke_wajah
 
+            
+        # Any statment is an expression if it has an operator operator 
+        return variables
+    
+    def printist(self,statement):
+        # if re.match("^\s*print\s*(.+)\s*$",statement):
+        #     res_value=
+        # pass
+
+        list_of_variable=self.get_print_items(statement)
+        print(" ".join(list_of_variable))
 
 
 

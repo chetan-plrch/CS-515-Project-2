@@ -3,8 +3,26 @@ Get it checked by sir if undeclared variable should have the same response as th
 input : /x
 output : 1
 
+1. In bc, "/x" is producing value 1, without x being declared
+2. Evaluation of this expression - "(4 + 2) * (3 - 5) / 2 % 3 ^ 2" is different on bc compared to python
+    a. On python it gives "3.0" (used "(4 + 2) * (3 - 5) / 2 % 3 ** 2")
+    b. On bc it yields "-6" (used "(4 + 2) * (3 - 5) / 2 % 3 ^ 2")
+    Now the question, should we follow bc implementation for precedence and associativity?
+3. What should we do for undeclared variables?
+    a. For eg: bc uses 0 as default value for undeclared variables
+4. For statement, which doesn't have assignment, eg: "(-x)"
+    a. Are we expected to print them (interactive way where it computes and prints)
+        eg: 5 (giving just 5 as statement, should make it print on the console?)
+5. Do we need to handle cases for unary minus (-) like these one
+    a. x = x + -x (The -x is without braces)
+    b. x = x +-x (Without spacing between "+" and "-x")
+    We can handle these though
+        a. x = x + (-x) (This makes sense though)
+        b. x = x + -(-x) (This makes sense though)
+
 
 print based checkups like x=x+1
+
 
 (4 + 2) * (3 - 5) / 2 % 3 ^ 2 different value from when compared to bc and python 
 
@@ -14,7 +32,6 @@ what to do in case of -(y)^2
 
 in case -(y)
 
-# 37e6cf59-2005-4d99-a0c7-d16af26a72bb
 how to tackle unary operation in which it is the first thing in the an expression
 
 create test case to handle unary:

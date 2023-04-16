@@ -7,6 +7,15 @@ def get_print_items(line):
     variables = list(map(lambda variable: variable.strip(), variables))
     return variables
 
+import re
+
+def inbuilt_parser(token):
+    # validate token
+    variables = re.findall('\((.*)\)', token)[0].split(',')
+    variables = list(map(lambda v: v.strip(), variables))
+    return variables
+
+print(inbuilt_parser('min(d , a)'))
 expressions = [
   "(5 - 3) * (2 + 6) / 4 ^ 2 % 3",
   "((7 + 2) * 5) % 6 + 2 ^ 2 ^ 2",

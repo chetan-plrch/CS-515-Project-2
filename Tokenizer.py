@@ -69,7 +69,7 @@ class Tokenizer:
         self.text = text
         self.token_map = [
             (r'^#(.)*$', 'SINGLELINE_COMMENT'),
-            (r'\/\*(?:.|\n)*?\*\/(?:\n|$)', 'MULTILINE_COMMENT'),
+            (r'/\*\*.+?\*/', 'MULTILINE_COMMENT'),
             (r'[ \t]+', None),
             (r'\n', 'NEWLINE'),
             (r'[A-Za-z][A-Za-z0-9_]*\+\+', 'POST_INCREMENT'),
@@ -142,6 +142,15 @@ class Tokenizer:
                 if not ((ch == '\n') or (ch == None)):
                     token_values[i].append(ch)
             i += 1
+        return token_values
+
+    def char_without_type_tokenized_line(self, tokens):
+        token_values = []
+        i = 0
+        for t in tokens:
+            ch = t[1]
+            if not ((ch == '\n') or (ch == None) or (ch == 'SINGLELINE_COMMENT') or (ch == 'MULTILINE_COMMENT')):
+                token_values[i].append(ch)
         return token_values
 
 

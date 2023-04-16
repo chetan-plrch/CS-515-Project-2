@@ -57,26 +57,26 @@ class Printer(object):
         if symbol == "PRE_INCREMENT" or symbol=="PRE_DECREMENT":
             if ops == "++":
                 if operand in self.stacker_dict:
-                    self.stacker_dict[operand] = self.stacker_dict[operand]+1
+                    self.stacker_dict[operand] = float(self.stacker_dict[operand])+1
                     if operand == lookup:
                         pass
                     else:
                         # can be redunant
-                        self.stacker_dict[lookup] = self.stacker_dict[operand]
+                        self.stacker_dict[lookup] = float(self.stacker_dict[operand])
                 elif lookup in self.stacker_dict:  # To increment the value if already declared previously
-                    self.stacker_dict[lookup] = self.stacker_dict[lookup[0][0]]+1
+                    self.stacker_dict[lookup] = float(self.stacker_dict[lookup[0][0]])+1
                 else:  # To make value 1 if the variable is not declared in it
                     self.stacker_dict[lookup] = 1
                 return self.stacker_dict[lookup]
             elif ops == "--":
                 if operand in self.stacker_dict:
-                    self.stacker_dict[operand] = self.stacker_dict[operand]-1
+                    self.stacker_dict[operand] = float(self.stacker_dict[operand])-1
                     if operand == lookup:
                         pass
                     else:
-                        self.stacker_dict[lookup] = self.stacker_dict[operand]
+                        self.stacker_dict[lookup] = float(self.stacker_dict[operand])
                 elif lookup in self.stacker_dict:
-                    self.stacker_dict[lookup] = self.stacker_dict[lookup[0][0]]-1
+                    self.stacker_dict[lookup] = float(self.stacker_dict[lookup[0][0]])-1
                 else:  # To make value 1 if the variable is not declared in it
                     self.stacker_dict[lookup] = -1
                 return self.stacker_dict[lookup]
@@ -84,15 +84,15 @@ class Printer(object):
             if ops == "++":
                 if operand in self.stacker_dict:
                     temp = self.stacker_dict[operand]
-                    self.stacker_dict[operand] = self.stacker_dict[operand]+1
+                    self.stacker_dict[operand] = float(self.stacker_dict[operand])+1
                     if operand == lookup:
                         pass
                     else:
                         # can be redunant
-                        self.stacker_dict[lookup] = self.stacker_dict[operand]
+                        self.stacker_dict[lookup] = float(self.stacker_dict[operand])
                 elif lookup in self.stacker_dict:  # To increment the value if already declared previously
                     temp = self.stacker_dict[operand]
-                    self.stacker_dict[lookup] = self.stacker_dict[lookup[0][0]]+1
+                    self.stacker_dict[lookup] = float(self.stacker_dict[lookup[0][0]])+1
                 else:  # To make value 1 if the variable is not declared in it
                     temp = 0
                     self.stacker_dict[lookup] = 1
@@ -100,14 +100,14 @@ class Printer(object):
             elif ops == "--":
                 if operand in self.stacker_dict:
                     temp = self.stacker_dict[operand]
-                    self.stacker_dict[operand] = self.stacker_dict[operand]-1
+                    self.stacker_dict[operand] = float(self.stacker_dict[operand])-1
                     if operand == lookup:
                         pass
                     else:
-                        self.stacker_dict[lookup] = self.stacker_dict[operand]
+                        self.stacker_dict[lookup] = float(self.stacker_dict[operand])
                 elif lookup in self.stacker_dict:
                     temp = self.stacker_dict[operand]
-                    self.stacker_dict[lookup] = self.stacker_dict[lookup[0][0]]-1
+                    self.stacker_dict[lookup] = float(self.stacker_dict[lookup[0][0]])-1
                 else:  # To make value 1 if the variable is not declared in it
                     temp = 0
                     self.stacker_dict[lookup] = -1
@@ -116,7 +116,7 @@ class Printer(object):
             if ops == "-":  # unary handling
                 if operand in self.stacker_dict:
                     # if lookup in self.stacker_dict:# To increment the value if already declared previously
-                    self.stacker_dict[lookup] = self.stacker_dict[operand]*-1
+                    self.stacker_dict[lookup] = float(self.stacker_dict[operand])*-1
                 else:  # To make value 1 if the variable is not declared in it
                     self.stacker_dict[lookup] = 0
                     # BUG not working
@@ -336,7 +336,7 @@ class Printer(object):
             evalu=ExpressionEvaluation.ExpressionEvaluation()
             result=evalu.evaluate_expression(pre_post)
             self.stacker_dict[spliting_for_RHS_Eval[0]]=result
-            print(result)
+            return(result)
             # TODO create the else
             
 

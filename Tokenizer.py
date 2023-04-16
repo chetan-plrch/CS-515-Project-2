@@ -95,10 +95,11 @@ class Tokenizer:
         ]
 
     def clean_comments(self, txt):
-        MULTILINE_COMMENT = (r'(?s)/\*(.*?)\*/$', '')
-        SINGLELINE_COMMENT = (r'^#(.)*$', ''),
-        multiline_clean = re.sub(MULTILINE_COMMENT[0], MULTILINE_COMMENT[1], txt)
-        return re.sub(SINGLELINE_COMMENT[0], SINGLELINE_COMMENT[1], multiline_clean)
+        # clean multiline and single line comments by replacing them with empty string
+        multiline_clean = re.sub(f'(?s)/\*(.*?)\*/', '', txt)
+        singleline_clean = re.sub(f'\#(.)*', '', multiline_clean)
+        no_empty_lines = re.sub(r'\n\s*\n', '\n', singleline_clean, flags=re.MULTILINE)
+        return no_empty_lines
 
     def tokenize(self):
         while self.pos < len(self.text):

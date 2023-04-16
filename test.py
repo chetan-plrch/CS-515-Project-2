@@ -4,9 +4,9 @@ import Evaluation
 
 file_txt = open('expression.txt').read()
 t = Tokenizer.Tokenizer(file_txt)
-# token_lines = t.char_with_type_tokenized_lines()
-# for tokens in token_lines:
-#     print(tokens)
+token_lines = t.char_with_type_tokenized_lines()
+for tokens in token_lines:
+    print(tokens)
 
 # d = {
 #     'a': 1

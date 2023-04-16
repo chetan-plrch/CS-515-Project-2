@@ -66,10 +66,15 @@ class Tokenizer:
         self.tokens = []
         self.current_token = None
         self.pos = 0
-        self.text = text
+        self.text = self.clean_comments(text)
         self.token_map = [
-            (r'^#(.)*$', 'SINGLELINE_COMMENT'),
-            (r'/\*\*.+?\*/', 'MULTILINE_COMMENT'),
+            (r'^min\(.*\)', 'MIN'),
+            (r'^max\(.*\)', 'MAX'),
+            (r'^floor\(.*\)', 'FLOOR'),
+            (r'^ceil\(.*\)', 'CEIL'),
+            (r'^sqrt\(.*\)', 'SQRT'),
+            (r'^ln\(.*\)', 'LN'),
+            (r'^read\(.*\)', 'READ'),
             (r'[ \t]+', None),
             (r'\n', 'NEWLINE'),
             (r'[A-Za-z][A-Za-z0-9_]*\+\+', 'POST_INCREMENT'),
@@ -88,6 +93,12 @@ class Tokenizer:
             (r'[A-Za-z][A-Za-z0-9_]*', 'NAME'),
             (r'\d+(\.\d+)?', 'NUMBER'),
         ]
+
+    def clean_comments(self, txt):
+        MULTILINE_COMMENT = (r'(?s)/\*(.*?)\*/$', '')
+        SINGLELINE_COMMENT = (r'^#(.)*$', ''),
+        multiline_clean = re.sub(MULTILINE_COMMENT[0], MULTILINE_COMMENT[1], txt)
+        return re.sub(SINGLELINE_COMMENT[0], SINGLELINE_COMMENT[1], multiline_clean)
 
     def tokenize(self):
         while self.pos < len(self.text):
@@ -149,7 +160,7 @@ class Tokenizer:
         i = 0
         for t in tokens:
             ch = t[1]
-            if not ((ch == '\n') or (ch == None) or (ch == 'SINGLELINE_COMMENT') or (ch == 'MULTILINE_COMMENT')):
+            if not ((ch == '\n') or (ch == None)):
                 token_values.append(ch)
         return token_values
 

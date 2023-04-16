@@ -3,10 +3,17 @@ import Construct_AST
 import Evaluation
 
 file_txt = open('expression.txt').read()
-t = Tokenizer.Tokenizer('5')
-token_lines = t.char_without_type_tokenized_lines()
-for tokens in token_lines:
-    print(tokens)
+t = Tokenizer.Tokenizer(file_txt)
+# token_lines = t.char_with_type_tokenized_lines()
+# for tokens in token_lines:
+#     print(tokens)
+
+# d = {
+#     'a': 1
+# }
+#
+# def print(line):
+#     re.match(f'\s*print\s(.*)', line)
 
 # print(t.tokenize())
 # tokens = t.char_with_type_tokenized_lines()
@@ -21,5 +28,6 @@ for tokens in token_lines:
 #     e = Evaluation.Evaluate()
 #     v = e.evaluate(ast)
 #     print(v)
+
 
 

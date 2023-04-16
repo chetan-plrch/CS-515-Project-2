@@ -7,7 +7,7 @@ x+++y++
 ++x+y++
 # hfkjdshkjhfkjsdhgjhjfdhgjh
 x=++x
-x= (x)- -(y)
+x= (x)- -(y) * min(xjkdfjkh,fdsjfh,hfdhh) - 6
 x - --y
 /*klhflkhdslkfhksdhhhkdshfkh
 fdshfhsdkf*/
@@ -18,3 +18,7 @@ x- -y
 x+-y
 2*-(x+y)
 */
+
+x = -5 * 125
+x = -5 ^ 345
+x = 7 * -(5 ^ 2)

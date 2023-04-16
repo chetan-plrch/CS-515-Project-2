@@ -39,5 +39,7 @@ for l in tokens:
 #     v = e.evaluate(ast)
 #     print(v)
 
+# ['POST_INCREMENT', 'POST_DECREMENT', 'PRE_INCREMENT', 'PRE_DECREMENT', 'POWER', 'MULTIPLY', 'DIVIDE', 'MODULO', 'PLUS', 'MINUS', 'CONJUNCTION', 'DISJUNCTION']
+
 
 

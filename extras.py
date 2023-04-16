@@ -7,6 +7,8 @@ def get_print_items(line):
     variables = list(map(lambda variable: variable.strip(), variables))
     return variables
 
+# variable value
+
 import re
 
 def inbuilt_parser(token):

@@ -1,5 +1,5 @@
 import re
-
+import Tokenizer
 # TODO create function which will take out variable and put it to dictionary which acts like independent stack like in os
 # TODO create a function which will print the values of given command line
 import doctest
@@ -263,6 +263,69 @@ class Printer(object):
 
             count = count+1
         return(list_of_tokens)
+    
+    # def printist(self,statement):
+    #     if re.match("^\s*print\s*(.+)\s*$",statement):
+    #         res_value=
+    #     pass
 
+    def ops_extension(self,statement: str):
+        """code to handle the ops_extension
+
+        Args:
+            statement (str): this will be the command which will be given in the input
+
+        Returns:
+            _type_: either a the new statement or False ( False means the pattern did not match )
+        """
+
+        if re.match("^\s*([a-zA-Z][\w]*)\s*([\^|\+\-*\\\%])=(.+)$",statement):
+            op_manager=re.findall("^\s*([a-zA-Z][\w]*)\s*([\^|\+\-*\\\%])=(.+)$",statement)
+            res_value=op_manager[0][0]# LHS value
+            operator=op_manager[0][1]# RHS Value
+            new_statment=statement
+            
+            # removing previous values
+
+            # Sanitizing the LHS
+            for index,i in enumerate(statement):
+                if i==operator:
+                    position_at=index
+                    new_statment=statement[:position_at]+statement[position_at+1:]
+                    break
+            print(new_statment)
+
+            # Adding the operation to RHS
+
+            # Adding parenthesis, res_value and operator 
+            for index,i in enumerate(new_statment):
+                if i=="=":
+                    position_at=index
+                    new_statment=new_statment[:position_at+1]+" "+res_value+" "+operator+" "+"("+new_statment[position_at+1:]+")"
+                    return new_statment
+
+           
+        return False # if ops is not required
+
+    def assigner(self,statement):
+        spliter=statement.split("=")
+        try:
+            is_float=True if float(spliter[1]) or int(spliter[1]) else False
+        except: 
+            is_float=False
+        if is_float:
+            print(spliter)
+            self.stacker_dict[spliter[0]]=spliter[1]
+        else:
+            ops=self.ops_extension(statement)
+            spliting_for_RHS_Eval
+            if ops!=False:
+                t= Tokenizer.Tokenizer(spliter[1])
 
 # creating a helper function which will be integrated in the project2.py
+
+
+# DONE Extension
+# I need to add brackets at 0 and -1
+# I need add the op at 0 
+# I need to add the LHS

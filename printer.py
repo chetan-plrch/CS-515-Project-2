@@ -155,8 +155,7 @@ class Printer(object):
                 operand = after_equals[0][1]
                 result = self.__inside_stack_checker_pre(
                     x[0][0], ops, operand, "PRE_INCREMENT")
-                print(result)
-                print(self.stacker_dict)
+             
 
             # TODO create a code for handling post
             elif re.match("^\s*([a-zA-Z][\w]*)\s*(\+\+|--)$", x[0][1]):
@@ -167,8 +166,6 @@ class Printer(object):
                 ops = after_equals[0][1]
                 result = self.__inside_stack_checker_pre(
                     x[0][0], ops, operand, "POST_INCREMENT")
-                print(result)
-                print(self.stacker_dict)
 
             # Code for handling ++,--,- value only
             if re.findall("^\s*(-)\s*([a-zA-Z][\w]*)$", x[0][1]):
@@ -179,8 +176,6 @@ class Printer(object):
                 operand = after_equals[0][1]
                 result = self.__inside_stack_checker_pre(
                     x[0][0], ops, operand, "UNARY")
-                print(result)
-                print(self.stacker_dict)
         elif re.match("^\s*(\+\+|--|-)\s*([a-zA-Z][\w]*)$|^\s*([a-zA-Z][\w]*)\s*(\+\+|--)$", liner):
             y = re.findall(
                 "^\s*(\+\+|--|-)\s*([a-zA-Z][\w]*)$|^\s*([a-zA-Z][\w]*)\s*(\+\+|--)$", liner)
@@ -238,26 +233,36 @@ class Printer(object):
                     lookup, ops, operand, operation_system)
                 list_of_tokens.pop(count)
                 list_of_tokens[count]=("NUMBER",result)
-            if list_of_tokens[count][0]=="MINUS":
-                # TODO case 1 : when there is number in front of the unary 
-                # TODO case 2 : when there is a LPAREN in front of the unary
-                # Case 1 : if there is + in front of unary convert + into -
-                # and if there is - infront of then convert into + 
-                if count==0:
-                    #TODO pendingid: 37e6cf59-2005-4d99-a0c7-d16af26a72bb
-                    pass
-                elif list_of_tokens[count-1][0]=="NUMBER" or list_of_tokens[count-1][0]=="RPAREN":
-                    pass
-                elif list_of_tokens[count-1][0]=="PLUS":
-                    list_of_tokens.pop(count-1)# poping out the plus 
-                elif list_of_tokens[count-1][0]=="MINUS":
-                    list_of_tokens[count-1]=("PLUS",'+')# converting - -() into + () 
-                    list_of_tokens.pop(count)# poping it as redunant due to 
-                elif list_of_tokens[count+1][0]=="LPAREN":
-                  
-                    list_of_tokens.insert(count,("NUMBER","-1"))
-                    list_of_tokens.pop(count+1)
-                    list_of_tokens.insert(count+1,("MULTIPLY","*"))
+            # if list_of_tokens[count][0]=="MINUS":
+            #     # TODO case 1 : when there is number in front of the unary 
+            #     # TODO case 2 : when there is a LPAREN in front of the unary
+            #     # Case 1 : if there is + in front of unary convert + into -
+            #     # and if there is - infront of then convert into + 
+            #     if list_of_tokens[count+1][0]=="MINUS":
+            #     list_of_tokens.insert(count+1,("LPAREN","("))
+            #     list_of_tokens.insert(count+2,("NUMBER","-1"))
+                
+            #     list_of_tokens.insert(count+3,("MULTIPLY","*"))
+                
+            #     list_of_tokens.pop(count)
+                
+            #     if list_of_tokens[count+3][0]=="LPAREN":
+            #         temp_count=0
+            #         index_var=0
+            #         for index,i in enumerate(list_of_tokens[count+3:]):
+            #             if i[0]=="LPAREN":
+            #                 temp_count+=1
+            #             if i[0]=="RPAREN":
+            #                 temp_count-=1
+            #             if temp_count==0:
+            #                 index_var=index
+            #                 break
+                        
+            #         list_of_tokens.insert(count+3+index_var,("RPAREN",")"))
+            #     else:
+            #         list_of_tokens.insert(count+4,("RPAREN",")"))
+                    
+                # print(list_of_tokens)
 
             if list_of_tokens[count][0]=="NAME":
                 if list_of_tokens[count][1] in self.stacker_dict.keys():
@@ -266,7 +271,7 @@ class Printer(object):
                     tempVar=0
                 list_of_tokens[count]=("NUMBER",str(tempVar))
                     # list_of_tokens.pop(count)
-
+            
             count = count+1
         return(list_of_tokens)
     
@@ -332,12 +337,15 @@ class Printer(object):
             t= Tokenizer.Tokenizer(spliting_for_RHS_Eval[1])
             list_of_tokens=t.char_with_type_tokenized_lines()
             pre_post=self.token_helper_pre_post(list_of_tokens[0])
+            list(pre_post)
             pre_post=t.char_without_type_tokenized_line(pre_post)
             evalu=ExpressionEvaluation.ExpressionEvaluation()
             result=evalu.evaluate_expression(pre_post)
             self.stacker_dict[spliting_for_RHS_Eval[0]]=result
             return(result)
             # TODO create the else
+    
+    
             
 
 

@@ -1,4 +1,5 @@
-arr = [
+import Printer
+expressions = [
   "++a + b-- * c++ - d + ++e",
   "f-- * ++g - ++h / i-- + j",
   "--k + ++l * m-- + n / o--",
@@ -20,3 +21,14 @@ arr = [
   "++aaa * bbb-- + --ccc / ddd-- - eee * ++fff",
   "ggg-- / ++hhh - iii-- + jjj-- * kk++ + ll / --mmm"
 ]
+
+for i in range(len(expressions)):
+    x=Printer.Printer()
+    # print(expressions[i])
+    try:
+      print(expressions[i])
+      print(x.assigner("x="+expressions[i]))
+    except ZeroDivisionError:
+       pass
+
+  

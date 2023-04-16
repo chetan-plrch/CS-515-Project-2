@@ -40,3 +40,5 @@ create test case to handle unary:
 
 * Imp Pending 
 1. Print 
+
+x+ min(z,y)

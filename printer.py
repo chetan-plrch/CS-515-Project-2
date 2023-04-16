@@ -220,7 +220,6 @@ class Printer(object):
         #      print(list_of_tokens[count])
 
         while (count < len(list_of_tokens)):
-            print(list_of_tokens[count])
             if list_of_tokens[count][0] == "POST_INCREMENT" or list_of_tokens[count][0]=="POST_DECREMENT":
                 ops = list_of_tokens[count][1][1:]
                 lookup = list_of_tokens[count][1][0]
@@ -235,7 +234,6 @@ class Printer(object):
                 lookup=list_of_tokens[count+1][1]
                 operand=lookup
                 operation_system=list_of_tokens[count][0]
-            
                 result = self.__inside_stack_checker_pre(
                     lookup, ops, operand, operation_system)
                 list_of_tokens.pop(count)
@@ -256,8 +254,11 @@ class Printer(object):
                     list_of_tokens[count-1]=("PLUS",'+')# converting - -() into + () 
                     list_of_tokens.pop(count)# poping it as redunant due to 
                 elif list_of_tokens[count+1][0]=="LPAREN":
+                  
                     list_of_tokens.insert(count,("NUMBER","-1"))
+                    list_of_tokens.pop(count+1)
                     list_of_tokens.insert(count+1,("MULTIPLY","*"))
+                   
                     # list_of_tokens.pop(count)
 
             count = count+1

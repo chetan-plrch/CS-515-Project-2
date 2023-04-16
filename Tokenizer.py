@@ -69,7 +69,7 @@ class Tokenizer:
         self.text = text
         self.token_map = [
             (r'^#(.)*$', 'SINGLELINE_COMMENT'),
-            (r'\/\*(?:.|\n)*?\*\/(?:\n|$)', 'MULTILINE_COMMENT'),
+            (r'^\\*(?:.|\n)*?\*\/(?:\n|$)', 'MULTILINE_COMMENT'),
             (r'[ \t]+', None),
             (r'\n', 'NEWLINE'),
             (r'[A-Za-z][A-Za-z0-9_]*\+\+', 'POST_INCREMENT'),

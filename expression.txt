@@ -5,10 +5,16 @@ x++ + y++
 x++ + ++y
 x+++y++
 ++x+y++
+# hfkjdshkjhfkjsdhgjhjfdhgjh
 x=++x
 x= (x)- -(y)
 x - --y
+/*klhflkhdslkfhksdhhhkdshfkh
+fdshfhsdkf*/
+/*dsihfhsdfsdf*/
+/*
 x +(++y)
 x- -y
 x+-y
 2*-(x+y)
+*/

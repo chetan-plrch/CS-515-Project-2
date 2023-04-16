@@ -52,7 +52,7 @@ class Construct_AST:
             else:
                 # Push operand onto ast_stack
                 ast_stack.append({
-                    'type': 'Literal' if token.isnumeric() else 'Identifier',
+                    'type': 'Literal' if self.is_number(token) else 'Identifier',
                     'value': token
                 })
 
@@ -80,5 +80,10 @@ class Construct_AST:
         if node.get('left'):
             self.print_ast(node['left'], prefix + ('    ' if is_left else '│   '), True)
 
-
+    def is_number(self,value):
+        try: 
+            x=float(value)
+            return True
+        except:
+            return False
 

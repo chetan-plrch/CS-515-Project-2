@@ -150,7 +150,7 @@ class Tokenizer:
         for t in tokens:
             ch = t[1]
             if not ((ch == '\n') or (ch == None) or (ch == 'SINGLELINE_COMMENT') or (ch == 'MULTILINE_COMMENT')):
-                token_values[i].append(ch)
+                token_values.append(ch)
         return token_values
 
 

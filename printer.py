@@ -219,9 +219,7 @@ class Printer(object):
         count = 0
         # while(count<len(list_of_tokens)):
         #      print(list_of_tokens[count])
-        print(len(list_of_tokens))
         while (count < len(list_of_tokens)):
-            print(list_of_tokens[count][0])
             if list_of_tokens[count][0] == "POST_INCREMENT" or list_of_tokens[count][0]=="POST_DECREMENT":
                 ops = list_of_tokens[count][1][1:]
                 lookup = list_of_tokens[count][1][0]
@@ -262,12 +260,11 @@ class Printer(object):
                     list_of_tokens.insert(count+1,("MULTIPLY","*"))
 
             if list_of_tokens[count][0]=="NAME":
-                print("inside this ")
                 if list_of_tokens[count][1] in self.stacker_dict.keys():
                     tempVar=self.stacker_dict[list_of_tokens[count][1]]
                 else:
                     tempVar=0
-                list_of_tokens[count]=("NUMBER",tempVar)
+                list_of_tokens[count]=("NUMBER",str(tempVar))
                     # list_of_tokens.pop(count)
 
             count = count+1
@@ -329,17 +326,17 @@ class Printer(object):
             ops=self.ops_extension(statement)
             if ops!=False:
                 spliting_for_RHS_Eval=ops.split("=")
-                print("inside the else")
-
-                t= Tokenizer.Tokenizer(spliting_for_RHS_Eval[1])
-                list_of_tokens=t.char_with_type_tokenized_lines()
-                print("list of tokens",list_of_tokens)
-                pre_post=self.token_helper_pre_post(list_of_tokens[0])
-                evalu=ExpressionEvaluation.ExpressionEvaluation()
-                result=evalu.evaluate_expression(pre_post)
-                
             else:
-
+                spliting_for_RHS_Eval=statement.split("=")
+                spliting_for_RHS_Eval=list(map(lambda x: x.strip(),spliting_for_RHS_Eval))
+            t= Tokenizer.Tokenizer(spliting_for_RHS_Eval[1])
+            list_of_tokens=t.char_with_type_tokenized_lines()
+            pre_post=self.token_helper_pre_post(list_of_tokens[0])
+            pre_post=t.char_without_type_tokenized_line(pre_post)
+            evalu=ExpressionEvaluation.ExpressionEvaluation()
+            result=evalu.evaluate_expression(pre_post)
+            self.stacker_dict[spliting_for_RHS_Eval[0]]=result
+            print(result)
             # TODO create the else
             
 

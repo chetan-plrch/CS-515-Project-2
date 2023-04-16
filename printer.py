@@ -1,5 +1,6 @@
 import re
 import Tokenizer
+import ExpressionEvaluation
 # TODO create function which will take out variable and put it to dictionary which acts like independent stack like in os
 # TODO create a function which will print the values of given command line
 import doctest
@@ -218,8 +219,9 @@ class Printer(object):
         count = 0
         # while(count<len(list_of_tokens)):
         #      print(list_of_tokens[count])
-
+        print(len(list_of_tokens))
         while (count < len(list_of_tokens)):
+            print(list_of_tokens[count][0])
             if list_of_tokens[count][0] == "POST_INCREMENT" or list_of_tokens[count][0]=="POST_DECREMENT":
                 ops = list_of_tokens[count][1][1:]
                 lookup = list_of_tokens[count][1][0]
@@ -258,7 +260,14 @@ class Printer(object):
                     list_of_tokens.insert(count,("NUMBER","-1"))
                     list_of_tokens.pop(count+1)
                     list_of_tokens.insert(count+1,("MULTIPLY","*"))
-                   
+
+            if list_of_tokens[count][0]=="NAME":
+                print("inside this ")
+                if list_of_tokens[count][1] in self.stacker_dict.keys():
+                    tempVar=self.stacker_dict[list_of_tokens[count][1]]
+                else:
+                    tempVar=0
+                list_of_tokens[count]=("NUMBER",tempVar)
                     # list_of_tokens.pop(count)
 
             count = count+1
@@ -314,13 +323,29 @@ class Printer(object):
         except: 
             is_float=False
         if is_float:
-            print(spliter)
+       
             self.stacker_dict[spliter[0]]=spliter[1]
         else:
             ops=self.ops_extension(statement)
-            spliting_for_RHS_Eval
             if ops!=False:
-                t= Tokenizer.Tokenizer(spliter[1])
+                spliting_for_RHS_Eval=ops.split("=")
+                print("inside the else")
+
+                t= Tokenizer.Tokenizer(spliting_for_RHS_Eval[1])
+                list_of_tokens=t.char_with_type_tokenized_lines()
+                print("list of tokens",list_of_tokens)
+                pre_post=self.token_helper_pre_post(list_of_tokens[0])
+                evalu=ExpressionEvaluation.ExpressionEvaluation()
+                result=evalu.evaluate_expression(pre_post)
+                
+            else:
+
+            # TODO create the else
+            
+
+
+
+
 
 # creating a helper function which will be integrated in the project2.py
 

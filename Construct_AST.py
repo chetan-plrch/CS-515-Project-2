@@ -2,6 +2,12 @@ class Construct_AST:
     def construct(self, tokens):
         # Define operator precedence and associativity
         precedence = {
+            '<': (1, 'left'),
+            '>': (1, 'left'),
+            '==': (1, 'left'),
+            '!=': (1, 'left'),
+            '<=': (1, 'left'),
+            '>=': (1, 'left'),
             '&&': (1, 'left'),
             '||': (1, 'left'),
             '+': (2, 'left'),

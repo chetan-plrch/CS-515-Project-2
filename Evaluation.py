@@ -15,22 +15,22 @@ class Evaluate:
             return float(op2) % float(op1)
         elif i == '^':
             return float(op2) ** float(op1)
-        elif i == '&&':
-            return int((op2 != 0) and (op1 != 0))
-        elif i == '||':
-            return int((op2 != 0) or (op1 != 0))
-        elif i == '<':
-            return int(float(op2) < float(op1))
-        elif i == '>':
-            return int(float(op2) > float(op1))
-        elif i == '==':
-            return int(float(op2) == float(op1))
-        elif i == '!=':
-            return int(float(op2) != float(op1))
-        elif i == '<=':
-            return int(float(op2) <= float(op1))
-        elif i == '>=':
-            return int(float(op2) >= float(op1))
+        # elif i == '&&':
+        #     return int((op2 != 0) and (op1 != 0))
+        # elif i == '||':
+        #     return int((op2 != 0) or (op1 != 0))
+        # elif i == '<':
+        #     return int(float(op2) < float(op1))
+        # elif i == '>':
+        #     return int(float(op2) > float(op1))
+        # elif i == '==':
+        #     return int(float(op2) == float(op1))
+        # elif i == '!=':
+        #     return int(float(op2) != float(op1))
+        # elif i == '<=':
+        #     return int(float(op2) <= float(op1))
+        # elif i == '>=':
+        #     return int(float(op2) >= float(op1))
 
     def evaluate(self, cur_node):
         type = cur_node.get('type', '')

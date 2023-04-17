@@ -350,7 +350,8 @@ class Printer(object):
                     self.stacker_dict[spliter[0]]=str(float(spliter[1]))
                     return True
                 else:
-                    ops=self.ops_extension(statement)
+                    # ops=self.ops_extension(statement)
+                    ops=False
                     if ops!=False:
                         temp_spliter=re.findall("^\s*([a-zA-Z][\w]*)\s*=\s*(.+)$",statement)
                         spliting_for_RHS_Eval=temp_spliter[0][1]

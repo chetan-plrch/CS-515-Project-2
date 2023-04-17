@@ -2,6 +2,7 @@ import Tokenizer
 import Printer
 import sys
 
+
 t = Tokenizer.Tokenizer(sys.stdin.read())
 prgm = t.text
 lines = prgm.split('\n')

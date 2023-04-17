@@ -23,8 +23,10 @@ class Construct_AST:
             ast_stack = []
             op_stack = []
 
-            for token in tokens:
+            for i, token in enumerate(tokens):
                 if token in precedence:
+                    if (i+1) < len(tokens) and tokens[i+1] in precedence and tokens[i+1] != '+' and tokens[i+1] != '-':
+                        raise Errors.ParseError('Invalid expression: two operators are beside each other')
                     curr_precedence, curr_associativity = precedence[token]
                     while op_stack and op_stack[-1] != '(' and (precedence[op_stack[-1]][0] > curr_precedence or
                                                                 (precedence[op_stack[-1]][0] == curr_precedence and curr_associativity == 'left')):
@@ -68,8 +70,9 @@ class Construct_AST:
                     'left': left,
                     'right': right
                 })
-            # if len(ast_stack) != 1:
-            #     raise Errors.ParseError('Invalid expression')
+
+            if len(ast_stack) != 1:
+                raise Errors.ParseError('parse error')
         except:
             raise Errors.ParseError('parse error')
         return ast_stack[0]

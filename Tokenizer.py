@@ -68,13 +68,6 @@ class Tokenizer:
         self.pos = 0
         self.text = self.clean_comments(text)
         self.token_map = [
-            (r'^min\(.*\)', 'MIN'),
-            (r'^max\(.*\)', 'MAX'),
-            (r'^floor\(.*\)', 'FLOOR'),
-            (r'^ceil\(.*\)', 'CEIL'),
-            (r'^sqrt\(.*\)', 'SQRT'),
-            (r'^ln\(.*\)', 'LN'),
-            (r'^read\(.*\)', 'READ'),
             (r'[ \t]+', None),
             (r'\n', 'NEWLINE'),
             (r'[A-Za-z][A-Za-z0-9_]*\+\+', 'POST_INCREMENT'),

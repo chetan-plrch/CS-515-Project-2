@@ -1,7 +1,0 @@
-[('NAME', 'x'), ('ASSIGN', '='), ('NUMBER', '2'), ('PLUS', '+'), ('NUMBER', '0'), ('MULTIPLY', '*'), ('NUMBER', '2'), ('POWER', '^'), ('NUMBER', '3'), ('POWER', '^'), ('NUMBER', '5'), ('MULTIPLY', '*'), ('NUMBER', '8'), ('MULTIPLY', '*'), ('NUMBER', '9'), ('MULTIPLY', '*'), ('LPAREN', '('), ('NUMBER', '9'), ('MINUS', '-'), ('NUMBER', '2'), ('RPAREN', ')'), ('MINUS', '-'), ('NUMBER', '0'), ('PLUS', '+'), ('NUMBER', '1')]
-[('POST_INCREMENT', 'x++'), ('PLUS', '+'), ('POST_INCREMENT', 'y++')]
-[('PRE_INCREMENT', '++'), ('NAME', 'x'), ('PLUS', '+'), ('POST_INCREMENT', 'y++')]
-[('POST_INCREMENT', 'x++'), ('PLUS', '+'), ('PRE_INCREMENT', '++'), ('NAME', 'y')]
-[('POST_INCREMENT', 'x++'), ('PLUS', '+'), ('POST_INCREMENT', 'y++')]
-[('PRE_INCREMENT', '++'), ('NAME', 'x'), ('PLUS', '+'), ('POST_INCREMENT', 'y++')]
-[('NAME', 'x'), ('ASSIGN', '='), ('PRE_INCREMENT', '++'), ('NAME', 'x')]

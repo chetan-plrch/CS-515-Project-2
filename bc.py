@@ -8,6 +8,7 @@ try:
   t = Tokenizer.Tokenizer(sys.stdin.read())
 except Errors.ParseError:
   print('parse error')
+  exit(0)
 
 prgm = t.text
 lines = prgm.split('\n')

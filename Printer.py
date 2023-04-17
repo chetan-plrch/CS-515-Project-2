@@ -260,18 +260,18 @@ class Printer(object):
                     lookup, ops, operand, operation_system)
                 list_of_tokens.pop(count)
                 list_of_tokens[count]=("NUMBER",result)
-            if list_of_tokens[count][0]=="MINUS":
-                # TODO case 1 : when there is number in front of the unary 
-                # TODO case 2 : when there is a LPAREN in front of the unary
-                # Case 1 : if there is + in front of unary convert + into -
-                # and if there is - infront of then convert into + 
-                # if list_of_tokens[count+1][0]=="MINUS":
-                if count==0:
-                    list_of_tokens=self.token_helper_of_helper_unary(count,list_of_tokens)
-                elif list_of_tokens[count-1][0] in ['POWER','MULTIPLY','DIVIDE','MODULO','PLUS','MINUS','CONJUNCTION','DISJUNCTION']:
-                    list_of_tokens=self.token_helper_of_helper_unary(count,list_of_tokens)
-                elif list_of_tokens[count-1][0]=="LPAREN":
-                    list_of_tokens=self.token_helper_of_helper_unary(count,list_of_tokens)
+            # if list_of_tokens[count][0]=="MINUS":
+            #     # TODO case 1 : when there is number in front of the unary 
+            #     # TODO case 2 : when there is a LPAREN in front of the unary
+            #     # Case 1 : if there is + in front of unary convert + into -
+            #     # and if there is - infront of then convert into + 
+            #     # if list_of_tokens[count+1][0]=="MINUS":
+            #     if count==0:
+            #         list_of_tokens=self.token_helper_of_helper_unary(count,list_of_tokens)
+            #     elif list_of_tokens[count-1][0] in ['POWER','MULTIPLY','DIVIDE','MODULO','PLUS','MINUS','CONJUNCTION','DISJUNCTION']:
+            #         list_of_tokens=self.token_helper_of_helper_unary(count,list_of_tokens)
+            #     elif list_of_tokens[count-1][0]=="LPAREN":
+            #         list_of_tokens=self.token_helper_of_helper_unary(count,list_of_tokens)
                     
 
             if list_of_tokens[count][0]=="NAME":

@@ -66,7 +66,8 @@ class Tokenizer:
         self.tokens = []
         self.current_token = None
         self.pos = 0
-        self.text = self.clean_comments(text)
+        # self.text = self.clean_comments(text)
+        self.text=text
         self.token_map = [
             (r'^min\(.*\)', 'MIN'),
             (r'^max\(.*\)', 'MAX'),

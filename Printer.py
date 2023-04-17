@@ -336,7 +336,7 @@ class Printer(object):
                     self.stacker(statement)
                     return True
                 else:
-                    spliting_for_RHS_Eval=statement# TODO Assuming valid
+                    spliting_for_RHS_Eval=statement# Assuming valid
                     operand=None
             else:
                 temp_spliter=[spliter[0][0],spliter[0][1]]
@@ -365,7 +365,7 @@ class Printer(object):
             list_of_tokens=t.char_with_type_tokenized_lines()
             pre_post=self.token_helper_pre_post(list_of_tokens[0])
         
-            
+            list(pre_post)
             pre_post=t.char_without_type_tokenized_line(pre_post)
             
             evalu=ExpressionEvaluation.ExpressionEvaluation()
@@ -382,7 +382,7 @@ class Printer(object):
         variables = m.group(1).split(',')
        
         variables = list(map(lambda variable: variable.strip(), variables))
-        temp_list=[]
+        chetan_ke_wajah=[]
         for i in variables:
             try:
                 float(i)
@@ -391,29 +391,29 @@ class Printer(object):
                 is_numeric=False
             if is_numeric==True:
                 # Meaning it's a constant
-                temp_list.append(str(float(i)))
+                chetan_ke_wajah.append(str(float(i)))
             elif re.match("^[A-Za-z][A-Za-z0-9_]*$", i):
                 # TODO: Handle if the identifier contains space: throw error
                 if i in self.stacker_dict.keys():
-                    temp_list.append(self.stacker_dict[i]) 
+                    chetan_ke_wajah.append(self.stacker_dict[i]) 
                 else:
-                    temp_list.append(0)
-            else: # TODO check this
+                    chetan_ke_wajah.append(0)
+            else : # TODO check this
                 t= Tokenizer.Tokenizer(i)
                 list_of_tokens=t.char_with_type_tokenized_lines()
                 pre_post=self.token_helper_pre_post(list_of_tokens[0])
                 
-              
+                
                 pre_post=t.char_without_type_tokenized_line(pre_post)
                 pre_post=list(map(lambda x: str(x),pre_post))
+                print(pre_post)
                 evalu=ExpressionEvaluation.ExpressionEvaluation()
-                
                 result=evalu.evaluate_expression(pre_post)
-                temp_list.append(str(result))
+                chetan_ke_wajah.append(str(result))
             # else:
             #     raise SyntaxError
             
-        return temp_list
+        return chetan_ke_wajah
 
             
         # Any statment is an expression if it has an operator operator 

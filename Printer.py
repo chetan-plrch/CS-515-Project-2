@@ -397,7 +397,7 @@ class Printer(object):
                 if i in self.stacker_dict.keys():
                     chetan_ke_wajah.append(self.stacker_dict[i]) 
                 else:
-                    chetan_ke_wajah.append(float(0))
+                    chetan_ke_wajah.append(0)
             elif filter(lambda x: True if x in ["+","-","/","*","%","^","(",")","&","|","!"] else False,i): # TODO check this
                 t= Tokenizer.Tokenizer(i)
                 list_of_tokens=t.char_with_type_tokenized_lines()

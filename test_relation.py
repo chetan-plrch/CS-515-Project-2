@@ -44,7 +44,7 @@ fdgjdfhghkjdfg
 dfg dfgdfgdf /
 '''
 
-segments = [segment_1]
+segments = [segment_2]
 
 for seg in segments:
     print(seg)

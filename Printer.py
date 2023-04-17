@@ -13,16 +13,6 @@ class Printer(object):
     def __init__(self) -> None:
         self.stacker_dict = {}
 
-    # def eprint(self, in_string):
-    #     if self.in_string == "":
-    #         raise SyntaxError
-    #     if re.findall("\s*[1-9]*\s*"):
-    #         pass  # number
-    #     if re.findall("\s*([a-bA-Z_])*\s*"):
-    #         pass
-    #     if re.findall("\s*[+-*%/\\()]*\s"):
-    #         pass
-
     def __inside_stack_checker_pre(self, lookup, ops, operand, symbol):
         # TODO add check for operand = constant
         """
@@ -334,6 +324,7 @@ class Printer(object):
           
             if not spliter:
                 if re.match("^\s*(\+\+|--)\s*([a-zA-Z][\w]*)$|^\s*([a-zA-Z][\w]*)\s*(\+\+|--)$",statement):
+                    # ++x or other
                     self.stacker(statement)
                     return True
                 else:
@@ -374,6 +365,9 @@ class Printer(object):
             except ZeroDivisionError:
                 error = 'divide by zero'
                 print(error)
+                exit(0)
+            except Errors.ParseError:
+                print ("parse error")
                 exit(0)
             if operand:
                 self.stacker_dict[operand]=result
@@ -420,6 +414,9 @@ class Printer(object):
                     temp_list.append(error)
                     self.terminator=True
                     return temp_list
+                except Errors.ParseError:
+                    print ("parse error")
+                    exit(0)
                 # try:
                 #     evalu=ExpressionEvaluation.ExpressionEvaluation()
                 #     result=evalu.evaluate_expression(pre_post)

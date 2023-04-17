@@ -360,7 +360,7 @@ class Printer(object):
                         # spliting_for_RHS_Eval=list(map(lambda x: x.strip(),spliting_for_RHS_Eval))
             
                 operand=temp_spliter[0][0]
-                print(spliting_for_RHS_Eval)
+               
             t= Tokenizer.Tokenizer(spliting_for_RHS_Eval)
             list_of_tokens=t.char_with_type_tokenized_lines()
             pre_post=self.token_helper_pre_post(list_of_tokens[0])
@@ -390,12 +390,9 @@ class Printer(object):
             except:
                 is_numeric=False
             if is_numeric==True:
-             
                 chetan_ke_wajah.append(str(float(i)))
             elif re.match("^[A-Za-z][A-Za-z0-9_]*$",i):
-               
                 if i in self.stacker_dict.keys():
-                   
                     chetan_ke_wajah.append(self.stacker_dict[i]) 
                 else:
                     chetan_ke_wajah.append(0)
@@ -421,16 +418,12 @@ class Printer(object):
         return variables
     
     def printist(self,statement):
-        # if re.match("^\s*print\s*(.+)\s*$",statement):
-        #     res_value=
-        # pass
-       
         list_of_variable=self.get_print_items(statement)
      
         list_of_variable=list(map(lambda x: str(x),list_of_variable))
 
         print(" ".join(list_of_variable))
-
+        return (" ".join(list_of_variable))
 
 
 

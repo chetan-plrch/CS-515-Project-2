@@ -360,7 +360,7 @@ class Printer(object):
                         # spliting_for_RHS_Eval=list(map(lambda x: x.strip(),spliting_for_RHS_Eval))
             
                 operand=temp_spliter[0][0]
-                print(spliting_for_RHS_Eval)
+               
             t= Tokenizer.Tokenizer(spliting_for_RHS_Eval)
             list_of_tokens=t.char_with_type_tokenized_lines()
             pre_post=self.token_helper_pre_post(list_of_tokens[0])

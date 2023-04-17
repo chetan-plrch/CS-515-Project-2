@@ -1,3 +1,5 @@
+import Errors
+
 class Evaluate:
     def __init__(self):
         pass
@@ -44,5 +46,6 @@ class Evaluate:
             operator = cur_node.get('operator')
             return self.operate(left, right, operator)
         else:
-            raise Exception('Unrecognized type during evaluation!')
+            raise Errors.ParseError('parse error')
+
 

@@ -1,9 +1,14 @@
 import Tokenizer
 import Printer
 import sys
+import Errors
 
 
-t = Tokenizer.Tokenizer(sys.stdin.read())
+try:
+  t = Tokenizer.Tokenizer(sys.stdin.read())
+except Errors.ParseError:
+  print('parse error')
+
 prgm = t.text
 lines = prgm.split('\n')
 

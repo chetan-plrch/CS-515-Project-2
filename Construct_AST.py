@@ -4,20 +4,20 @@ class Construct_AST:
     def construct(self, tokens):
         try:
             precedence = {
-                '<': (1, 'left'),
-                '>': (1, 'left'),
-                '==': (1, 'left'),
-                '!=': (1, 'left'),
-                '<=': (1, 'left'),
-                '>=': (1, 'left'),
                 '&&': (1, 'left'),
                 '||': (1, 'left'),
-                '+': (2, 'left'),
-                '-': (2, 'left'),
-                '*': (3, 'left'),
-                '/': (3, 'left'),
-                '%': (3, 'left'),
-                '^': (4, 'right')
+                '<': (2, 'left'),
+                '>': (2, 'left'),
+                '==': (2, 'left'),
+                '!=': (2, 'left'),
+                '<=': (2, 'left'),
+                '>=': (2, 'left'),
+                '+': (3, 'left'),
+                '-': (3, 'left'),
+                '*': (4, 'left'),
+                '/': (4, 'left'),
+                '%': (4, 'left'),
+                '^': (5, 'right')
             }
 
             ast_stack = []
@@ -26,7 +26,7 @@ class Construct_AST:
             for i, token in enumerate(tokens):
                 if token in precedence:
                     if (i+1) < len(tokens) and tokens[i+1] in precedence and tokens[i+1] != '+' and tokens[i+1] != '-':
-                        raise Errors.ParseError('Invalid expression: two operators are beside each other')
+                        raise Errors.ParseError('Two operators are beside each other')
                     curr_precedence, curr_associativity = precedence[token]
                     while op_stack and op_stack[-1] != '(' and (precedence[op_stack[-1]][0] > curr_precedence or
                                                                 (precedence[op_stack[-1]][0] == curr_precedence and curr_associativity == 'left')):

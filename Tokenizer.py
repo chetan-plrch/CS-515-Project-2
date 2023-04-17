@@ -1,5 +1,5 @@
 import re
-
+import Errors
 
 class Token:
     def __init__(self, type_, value=None):
@@ -96,8 +96,16 @@ class Tokenizer:
         ]
 
     def clean_comments(self, txt):
-        # clean multiline and single line comments by replacing them with empty string
-        multiline_clean = re.sub(f'(?s)/\*(.*?)\*/', '', txt)
+        multiline_clean = txt
+
+        all_comments = re.findall(f'/\*[\s\S]*?(?:\*\/|$)', txt)
+        print('all comments', all_comments)
+        for cmt in all_comments:
+            if (len(cmt) >= 4) and ((cmt[0:2] == '/*') and (cmt[-2:] == '*/')):
+                multiline_clean = multiline_clean.replace(cmt, '')
+            else:
+                Errors.ParseError('parse error')
+
         singleline_clean = re.sub(f'\#(.)*', '', multiline_clean)
         no_empty_lines = re.sub(r'\n\s*\n', '\n', singleline_clean, flags=re.MULTILINE)
         return no_empty_lines

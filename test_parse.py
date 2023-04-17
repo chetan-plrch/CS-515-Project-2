@@ -71,11 +71,11 @@ print 1
 '''
 
 segment_9 = '''
-a = x--b
+a = 5-- - b
 '''
 
 
-segments = [segment_7]
+segments = [segment_9]
 
 for seg in segments:
     t = Tokenizer.Tokenizer(seg)

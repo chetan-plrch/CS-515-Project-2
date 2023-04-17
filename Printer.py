@@ -398,7 +398,7 @@ class Printer(object):
                     chetan_ke_wajah.append(self.stacker_dict[i]) 
                 else:
                     chetan_ke_wajah.append(0)
-            elif filter(lambda x: True if x in ["+","-","/","*","%","^","(",")","&","|","!"] else False,i): # TODO check this
+            else: # TODO check this
                 t= Tokenizer.Tokenizer(i)
                 list_of_tokens=t.char_with_type_tokenized_lines()
                 pre_post=self.token_helper_pre_post(list_of_tokens[0])
@@ -409,8 +409,8 @@ class Printer(object):
                 evalu=ExpressionEvaluation.ExpressionEvaluation()
                 result=evalu.evaluate_expression(pre_post)
                 chetan_ke_wajah.append(str(result))
-            else:
-                raise SyntaxError
+            # else:
+            #     raise SyntaxError
             
         return chetan_ke_wajah
 

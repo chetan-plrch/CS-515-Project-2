@@ -365,7 +365,7 @@ class Printer(object):
             list_of_tokens=t.char_with_type_tokenized_lines()
             pre_post=self.token_helper_pre_post(list_of_tokens[0])
         
-            list(pre_post)
+            
             pre_post=t.char_without_type_tokenized_line(pre_post)
             
             evalu=ExpressionEvaluation.ExpressionEvaluation()

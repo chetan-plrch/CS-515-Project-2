@@ -323,7 +323,7 @@ class Printer(object):
         return False # if ops is not required
 
     def assigner(self,statement):
-        if bool(re.match(f'\s*print\s*(.*)', statement)):
+        if re.match(f'\s*print\s*(.*)', statement):
             self.printist(statement)
             return True
         else:
@@ -392,7 +392,7 @@ class Printer(object):
             if is_numeric==True:
                 # Meaning it's a constant
                 chetan_ke_wajah.append(str(float(i)))
-            elif bool(re.match("^[A-Za-z][A-Za-z0-9_]*$", i)):
+            elif re.match("^[A-Za-z][A-Za-z0-9_]*$", i):
                 # TODO: Handle if the identifier contains space: throw error
                 if i in self.stacker_dict.keys():
                     chetan_ke_wajah.append(self.stacker_dict[i]) 
@@ -424,7 +424,6 @@ class Printer(object):
         list_of_variable=list(map(lambda x: str(x),list_of_variable))
 
         print(" ".join(list_of_variable))
-        return (" ".join(list_of_variable))
 
 
 

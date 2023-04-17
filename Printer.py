@@ -406,22 +406,24 @@ class Printer(object):
                 
               
                 pre_post=t.char_without_type_tokenized_line(pre_post)
-                try:
-                    evalu=ExpressionEvaluation.ExpressionEvaluation()
-                    result=evalu.evaluate_expression(pre_post)
-                except ZeroDivisionError:
-                    error = 'divide by zero'
-                except Errors.ParseError:
-                    temp_list = ['parse error']
-                    break
-                except SyntaxError:
-                    temp_list = ['parse error']
-                    break
-
-                if error:
-                    temp_list.append(error)
-                else:
-                    temp_list.append(str(result))
+                evalu=ExpressionEvaluation.ExpressionEvaluation()
+                result=evalu.evaluate_expression(pre_post)
+                # try:
+                #     evalu=ExpressionEvaluation.ExpressionEvaluation()
+                #     result=evalu.evaluate_expression(pre_post)
+                # except ZeroDivisionError:
+                #     error = 'divide by zero'
+                # except Errors.ParseError:
+                #     temp_list = ['parse error']
+                #     break
+                # except SyntaxError:
+                #     temp_list = ['parse error']
+                #     break
+                #
+                # if error:
+                #     temp_list.append(error)
+                # else:
+                temp_list.append(str(result))
             # else:
             #     raise SyntaxError
             

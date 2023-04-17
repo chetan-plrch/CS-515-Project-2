@@ -63,8 +63,8 @@ class Construct_AST:
             operator = op_stack.pop()
             right = ast_stack.pop()
             left = ast_stack.pop()
-            if operator == '/' and right['value'] == '0':
-                raise ZeroDivisionError('Division by zero')
+            # if operator == '/' and right['value'] == '0':
+            #     raise ZeroDivisionError('Division by zero')
             ast_stack.append({
                 'type': 'Binary',
                 'operator': operator,

@@ -367,14 +367,14 @@ class Printer(object):
             pre_post=self.token_helper_pre_post(list_of_tokens[0])
         
             pre_post=t.char_without_type_tokenized_line(pre_post)
-            pre_post=list(map(lambda x:str(x),pre_post))
+            
             evalu=ExpressionEvaluation.ExpressionEvaluation()
-            # try:
-            result=evalu.evaluate_expression(pre_post)
-            # except ZeroDivisionError:
-                # error = 'divide by zero'
-                # print(error)
-                # exit(0)
+            try:
+                result=evalu.evaluate_expression(pre_post)
+            except ZeroDivisionError:
+                error = 'divide by zero'
+                print(error)
+                exit(0)
             if operand:
                 self.stacker_dict[operand]=result
             else:
@@ -413,13 +413,13 @@ class Printer(object):
                 pre_post=t.char_without_type_tokenized_line(pre_post)
                 pre_post=list(map(lambda x:str(x),pre_post))
                 evalu=ExpressionEvaluation.ExpressionEvaluation()
-                # try:
-                result=evalu.evaluate_expression(pre_post)
-                # except ZeroDivisionError:
-                #     error = 'divide by zero'
-                #     temp_list.append(error)
-                #     self.terminator=True
-                #     return temp_list
+                try:
+                    result=evalu.evaluate_expression(pre_post)
+                except ZeroDivisionError:
+                    error = 'divide by zero'
+                    temp_list.append(error)
+                    self.terminator=True
+                    return temp_list
                 # try:
                 #     evalu=ExpressionEvaluation.ExpressionEvaluation()
                 #     result=evalu.evaluate_expression(pre_post)

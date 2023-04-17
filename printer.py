@@ -280,8 +280,6 @@ class Printer(object):
                     tempVar=0
                 list_of_tokens[count]=("NUMBER",str(tempVar))
                     # list_of_tokens.pop(count)
-            if list_of_tokens[count][1]=="MIN":
-                for i in 
             count = count+1
         return(list_of_tokens)
     
@@ -325,37 +323,53 @@ class Printer(object):
         return False # if ops is not required
 
     def assigner(self,statement):
-        spliter=statement.split("=")
-        try:
-            is_float=True if float(spliter[1]) or int(spliter[1]) else False
-        except: 
-            is_float=False
-        if is_float:
-       
-            self.stacker_dict[spliter[0]]=spliter[1]
+        if re.match(f'\s*print\s*(.*)', statement):
+            self.printist(statement)
         else:
-            ops=self.ops_extension(statement)
-            if ops!=False:
-                spliting_for_RHS_Eval=ops.split("=")
+            spliter=re.findall("^\s*([a-zA-Z][\w]*)\s*=\s*(.+)$",statement)
+            if not statement.strip():
+                return False
+          
+            if not spliter:
+                raise SyntaxError
             else:
-                spliting_for_RHS_Eval=statement.split("=")
-                spliting_for_RHS_Eval=list(map(lambda x: x.strip(),spliting_for_RHS_Eval))
-            t= Tokenizer.Tokenizer(spliting_for_RHS_Eval[1])
-            list_of_tokens=t.char_with_type_tokenized_lines()
-            pre_post=self.token_helper_pre_post(list_of_tokens[0])
-         
-            list(pre_post)
-            pre_post=t.char_without_type_tokenized_line(pre_post)
+                temp_spliter=[spliter[0][0],spliter[0][1]]
+                spliter=temp_spliter
+                try:
+                    is_float=True if float(spliter[1]) or int(spliter[1]) else False
+                except: 
+                    is_float=False
+                if is_float:
             
-            evalu=ExpressionEvaluation.ExpressionEvaluation()
-            result=evalu.evaluate_expression(pre_post)
-            self.stacker_dict[spliting_for_RHS_Eval[0]]=result
-            return(result)
-            # TODO create the else
+                    self.stacker_dict[spliter[0]]=str(float(spliter[1]))
+                else:
+                    ops=self.ops_extension(statement)
+                    if ops!=False:
+                        temp_spliter=re.findall("^\s*([a-zA-Z][\w]*)\s*=\s*(.+)$",statement)
+                        spliting_for_RHS_Eval=temp_spliter[0][1]
+                    else:
+                        temp_spliter=re.findall("^\s*([a-zA-Z][\w]*)\s*=\s*(.+)$",statement)
+                        spliting_for_RHS_Eval=temp_spliter[0][1]
+                        # spliting_for_RHS_Eval=list(map(lambda x: x.strip(),spliting_for_RHS_Eval))
+                    operand=temp_spliter[0][0]
+                    t= Tokenizer.Tokenizer(spliting_for_RHS_Eval)
+                    list_of_tokens=t.char_with_type_tokenized_lines()
+                    pre_post=self.token_helper_pre_post(list_of_tokens[0])
+                
+                    list(pre_post)
+                    pre_post=t.char_without_type_tokenized_line(pre_post)
+                    
+                    evalu=ExpressionEvaluation.ExpressionEvaluation()
+                    result=evalu.evaluate_expression(pre_post)
+                    self.stacker_dict[operand]=result
+                    
+                    return(result)
+                    # TODO create the else
     
     def get_print_items(self,line):
         m = re.match(f'\s*print\s*(.*)', line)
         variables = m.group(1).split(',')
+       
         variables = list(map(lambda variable: variable.strip(), variables))
         chetan_ke_wajah=[]
         for i in variables:
@@ -366,7 +380,7 @@ class Printer(object):
                 is_numeric=False
             if is_numeric==True:
              
-                chetan_ke_wajah.append(i)
+                chetan_ke_wajah.append(str(float(i)))
             elif re.match("^[A-Za-z][A-Za-z0-9_]*$",i):
                
                 if i in self.stacker_dict.keys():
@@ -399,8 +413,11 @@ class Printer(object):
         # if re.match("^\s*print\s*(.+)\s*$",statement):
         #     res_value=
         # pass
-
+       
         list_of_variable=self.get_print_items(statement)
+     
+        list_of_variable=list(map(lambda x: str(x),list_of_variable))
+
         print(" ".join(list_of_variable))
 
 

@@ -1,26 +1,55 @@
-2 + 0 * 2 ^ 3 ^ 5 * 8 * 9 * (9 - 2) - 0 && 1 || 67
-x++ + y++
-++x + ++y
-++x + y++
-x++ + ++y
-x+++y++
-++x+y++
-# hfkjdshkjhfkjsdhgjhjfdhgjh
-x=++x
-x= (x)- -(y) * min(xjkdfjkh,fdsjfh,hfdhh) - 6
-x - --y
-/*klhflkhdslkfhksdhhhkdshfkh
-fdshfhsdkf*/
-/*dsihfhsdfsdf*/
-/*
-x +(++y)
-x- -y
-x+-y
-2*-(x+y)
+# x=2 + 0 * 2 ^ 3 ^ 5 * 8 * 9 * (9 - 2) - 0 && 1 || 67
+# x=x++ + y++
+# x=++x + ++y
+# x=++x + y++
+# x=x++ + ++y
+# x=x+++y++
+# x=++x+y++
+# # hfkjdshkjhfkjsdhgjhjfdhgjh
+# x=++x
+# x= (x)- -(y) * min(xjkdfjkh,fdsjfh,hfdhh) - 6
+# x - --y
+# /*klhflkhdslkfhksdhhhkdshfkh
+# fdshfhsdkf*/
+# /*dsihfhsdfsdf*/
+# /*
+# x +(++y)
+# x- -y
+# x+-y
+# 2*-(x+y)
+# */
+# 
+# x = -5 * 125
+# x = -5 ^ 345
+# x = 7 * -(5 ^ 2)
+
+
+# pi = 3.14159
+# r = 2
+# area = pi * r^2
+# print area
+
+#x = 1
+
+
+
+#print x
+
+#print 5 - 1 - 1 - 1
+
+#print ((5 - 1) - 1) - 1
+
+#print 2 ^ 2 ^ 2
+
+#print 1
+#print 2
+#print 1 && 2, 2 && 1, -5 && 1, 0 && -100
+
+x = 1
+/* 
+x = 2
+y = 3
 */
-
-x = -5 * 125
-x = -5 ^ 345
-x = 7 * -(5 ^ 2)
-
-x= min(5,7)+1
+y = 4
+# print 0
+print x, y

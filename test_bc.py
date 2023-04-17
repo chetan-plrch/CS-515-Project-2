@@ -51,14 +51,17 @@ print x, y
 segments = [segment_1, segment_2, segment_3, segment_4, segment_5, segment_6]
 
 for seg in segments:
-    t = Tokenizer.Tokenizer(seg)
-    prgm = t.text
-    lines = prgm.split('\n')
+    pass
+    # t = Tokenizer.Tokenizer(seg)
+    # prgm = t.text
+    # lines = prgm.split('\n')
 
-    x = Printer.Printer()
-    for line in lines:
-      x.assigner(line)
-
+x = Printer.Printer()
+# for line in lines:
+# x.assigner('print 0, ++x, (5 - 3) * (2 + 6) / 4 ^ 2 % 3, ++a + b-- * c++ - d + ++e')
+x.assigner('x=1')
+x.assigner('print 5 ^ x++ + --y + ++a + 5 * 3 ^ 2')
+x.assigner('print x, y, a')
 
 
 

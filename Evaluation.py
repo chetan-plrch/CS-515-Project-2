@@ -6,6 +6,8 @@ class Evaluate:
         if i == '*':
             return float(op2) * float(op1)
         elif i == '/':
+            if float(op1) == 0:
+                raise ZeroDivisionError("divide by zero")
             return float(op2) / float(op1)
         elif i == '+':
             return float(op2) + float(op1)

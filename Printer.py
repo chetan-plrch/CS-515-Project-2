@@ -391,7 +391,7 @@ class Printer(object):
                 is_numeric=False
             if is_numeric==True:
                 # Meaning it's a constant
-                chetan_ke_wajah.append(str(float(i)))
+                chetan_ke_wajah.append(str(i))
             elif re.match("^[A-Za-z][A-Za-z0-9_]*$", i):
                 # TODO: Handle if the identifier contains space: throw error
                 if i in self.stacker_dict.keys():

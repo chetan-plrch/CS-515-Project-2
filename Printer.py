@@ -366,11 +366,15 @@ class Printer(object):
             list_of_tokens=t.char_with_type_tokenized_lines()
             pre_post=self.token_helper_pre_post(list_of_tokens[0])
         
-            list(pre_post)
             pre_post=t.char_without_type_tokenized_line(pre_post)
             
             evalu=ExpressionEvaluation.ExpressionEvaluation()
-            result=evalu.evaluate_expression(pre_post)
+            try:
+                result=evalu.evaluate_expression(pre_post)
+            except ZeroDivisionError:
+                error = 'divide by zero'
+                print(error)
+                exit(0)
             if operand:
                 self.stacker_dict[operand]=result
             else:
@@ -400,14 +404,22 @@ class Printer(object):
                 else:
                     temp_list.append(0)
             else: # TODO check this
+               
                 t= Tokenizer.Tokenizer(i)
                 list_of_tokens=t.char_with_type_tokenized_lines()
                 pre_post=self.token_helper_pre_post(list_of_tokens[0])
                 
-              
+
                 pre_post=t.char_without_type_tokenized_line(pre_post)
+                
                 evalu=ExpressionEvaluation.ExpressionEvaluation()
-                result=evalu.evaluate_expression(pre_post)
+                try:
+                    result=evalu.evaluate_expression(pre_post)
+                except ZeroDivisionError:
+                    error = 'divide by zero'
+                    temp_list.append(error)
+                    self.terminator=True
+                    return temp_list
                 # try:
                 #     evalu=ExpressionEvaluation.ExpressionEvaluation()
                 #     result=evalu.evaluate_expression(pre_post)
@@ -437,8 +449,15 @@ class Printer(object):
         list_of_variable=self.get_print_items(statement)
      
         list_of_variable=list(map(lambda x: str(x),list_of_variable))
-
-        print(" ".join(list_of_variable))
+        for index,i in enumerate(list_of_variable):
+            if i=='divide by zero':
+                print(i)
+                exit(0)
+            if index==len(list_of_variable)-1:
+                print(i)
+            else:
+                print(i,end=" ")
+        # print(" ".join(list_of_variable))
 
 
 

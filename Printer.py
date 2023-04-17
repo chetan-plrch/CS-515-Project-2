@@ -390,12 +390,9 @@ class Printer(object):
             except:
                 is_numeric=False
             if is_numeric==True:
-             
                 chetan_ke_wajah.append(str(float(i)))
             elif re.match("^[A-Za-z][A-Za-z0-9_]*$",i):
-               
                 if i in self.stacker_dict.keys():
-                   
                     chetan_ke_wajah.append(self.stacker_dict[i]) 
                 else:
                     chetan_ke_wajah.append(0)
@@ -421,16 +418,12 @@ class Printer(object):
         return variables
     
     def printist(self,statement):
-        # if re.match("^\s*print\s*(.+)\s*$",statement):
-        #     res_value=
-        # pass
-       
         list_of_variable=self.get_print_items(statement)
      
         list_of_variable=list(map(lambda x: str(x),list_of_variable))
 
         print(" ".join(list_of_variable))
-
+        return (" ".join(list_of_variable))
 
 
 

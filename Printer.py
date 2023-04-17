@@ -396,7 +396,7 @@ class Printer(object):
                 if i in self.stacker_dict.keys():
                     temp_list.append(self.stacker_dict[i]) 
                 else:
-                    temp_list.append(0)
+                    temp_list.append(float(0))
             else: # TODO check this
                
                 t= Tokenizer.Tokenizer(i)

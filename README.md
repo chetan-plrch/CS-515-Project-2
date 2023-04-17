@@ -16,7 +16,17 @@ you can run the scripts in the repo.
 
 We created a exhaustive list of expression and run on it, you find the exhaustive list in expression.txt 
 
-we also created the following docs to test specefic expression, this is difficult list
+we also created the following docs to test specefic functionalities.
+
+You to check this name different files:
+
+you can run :
+
+In Linux : 
+<code> python3 test_extras.py</code>
+
+## Flow Logic
+![python calculator drawio](https://user-images.githubusercontent.com/22773916/232634898-9fde6735-df71-4703-bb36-4fbee28dead6.png)
 
 
 ## Bugs

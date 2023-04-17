@@ -99,7 +99,6 @@ class Tokenizer:
         multiline_clean = txt
 
         all_comments = re.findall(f'/\*[\s\S]*?(?:\*\/|$)', txt)
-        print('all comments', all_comments)
         for cmt in all_comments:
             if (len(cmt) >= 4) and ((cmt[0:2] == '/*') and (cmt[-2:] == '*/')):
                 multiline_clean = multiline_clean.replace(cmt, '')

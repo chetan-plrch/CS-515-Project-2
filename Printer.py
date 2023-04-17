@@ -323,7 +323,7 @@ class Printer(object):
         return False # if ops is not required
 
     def assigner(self,statement):
-        if re.match(f'\s*print\s*(.*)', statement):
+        if bool(re.match(f'\s*print\s*(.*)', statement)):
             self.printist(statement)
             return True
         else:
@@ -390,14 +390,15 @@ class Printer(object):
             except:
                 is_numeric=False
             if is_numeric==True:
+                # Meaning it's a constant
                 chetan_ke_wajah.append(str(float(i)))
-            elif re.match("^[A-Za-z][A-Za-z0-9_]*$",i):
+            elif bool(re.match("^[A-Za-z][A-Za-z0-9_]*$", i)):
+                # TODO: Handle if the identifier contains space: throw error
                 if i in self.stacker_dict.keys():
                     chetan_ke_wajah.append(self.stacker_dict[i]) 
                 else:
-                    chetan_ke_wajah.append(0)
-            elif filter(lambda x: True if x in ["+","-","/","*","%","^","(",")","&","|","!"] else False,i):# TODO check this
-                
+                    chetan_ke_wajah.append(float(0))
+            elif filter(lambda x: True if x in ["+","-","/","*","%","^","(",")","&","|","!"] else False,i): # TODO check this
                 t= Tokenizer.Tokenizer(i)
                 list_of_tokens=t.char_with_type_tokenized_lines()
                 pre_post=self.token_helper_pre_post(list_of_tokens[0])

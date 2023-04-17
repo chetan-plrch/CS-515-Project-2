@@ -23,16 +23,21 @@ expressions = [
   "ggg-- * ++hhh - iii-- + jjj-- * kk++ + ll * --mmm"
 ]
 
+x = Printer.Printer()
+x.assigner(f'x=1')
+x.assigner(f'++x + ++y')
+x.assigner(f'print x, y')
+
 for i in range(len(expressions)):
     t = Tokenizer.Tokenizer(expressions[i])
     prgm = t.text
     lines = prgm.split('\n')
 
-    x = Printer.Printer()
-    x.assigner(f'x=1')
-    x.assigner(f'++x + ++y')
-    x.assigner(f'print x')
-    x.assigner(f'print y')
+    # x = Printer.Printer()
+    # x.assigner(f'x=1')
+    # x.assigner(f'++x + ++y')
+    # x.assigner(f'print x')
+    # x.assigner(f'print y')
 
     # for line in lines:
     #   x = Printer.Printer()

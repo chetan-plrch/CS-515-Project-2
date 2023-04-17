@@ -16,7 +16,7 @@ class Token:
         return self.type
 
     def get_value(self):
-        return self.value;
+        return self.value
 
 
 operator_types = {
@@ -74,6 +74,7 @@ class Tokenizer:
             (r'[A-Za-z][A-Za-z0-9_]*\-\-', 'POST_DECREMENT'),
             (r'\+\+', 'PRE_INCREMENT'),
             (r'--', 'PRE_DECREMENT'),
+            (r'!\d+(\.\d+)?', 'NEGATION_CONSTANT'),
             (r'\^', 'POWER'),
             (r'\*', 'MULTIPLY'),
             (r'/', 'DIVIDE'),

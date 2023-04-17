@@ -72,8 +72,8 @@ class Construct_AST:
                 'right': right
             })
 
-        if len(ast_stack) != 1:
-            raise Errors.ParseError('Invalid expression')
+        # if len(ast_stack) != 1:
+        #     raise Errors.ParseError('Invalid expression')
 
         return ast_stack[0]
 

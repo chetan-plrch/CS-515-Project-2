@@ -57,8 +57,8 @@ def check_invalid_expr(type):
         for t2 in types:
             combinations.append(f'{t1}-{t2}')
 
-    if type in combinations:
-        raise Exception('Two consecutive ++ -- found!')
+    # if type in combinations:
+    #     raise Exception('Two consecutive ++ -- found!')
 
 
 class Tokenizer:

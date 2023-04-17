@@ -286,8 +286,8 @@ class Printer(object):
             _type_: either a the new statement or False ( False means the pattern did not match )
         """
 
-        if re.match("^\s*([a-zA-Z][\w]*)\s*([\^|\+\-*\\|\%|!]{1}|[&&|\|\|]{2})=(.+)$",statement):
-            op_manager=re.findall("^\s*([a-zA-Z][\w]*)\s*([\^|\+\-*\\|\%|!]{1}|[&&|\|\|]{2})=(.+)$",statement)
+        if re.match("^\s*([a-zA-Z][\w]*)\s*([\^|\+\-*\/|\%|!]{1}|[&&|\|\|]{2})=(.+)$",statement):
+            op_manager=re.findall("^\s*([a-zA-Z][\w]*)\s*([\^|\+\-*\/|\%|!]{1}|[&&|\|\|]{2})=(.+)$",statement)
             res_value=op_manager[0][0]# LHS value
             operator=op_manager[0][1]# RHS Value
             new_statment=statement
@@ -314,25 +314,37 @@ class Printer(object):
         return False # if ops is not required
 
     def assigner(self,statement):
+      
         if re.match(f'\s*print\s*(.*)', statement):
+            # Go into print else calculate
             self.printist(statement)
             return True
         else:
             spliter=re.findall("^\s*([a-zA-Z][\w]*)\s*=\s*(.+)$",statement)
+            ops_regex=re.findall("^\s*([a-zA-Z][\w]*)\s*([\^|\+\-*\/|\%|!]{1}|[&&|\|\|]{2})=(.+)$",statement)
+            
             if not statement.strip():
                 return False
-          
-            if not spliter:
+            
+            if not spliter and not ops_regex:
+                
                 if re.match("^\s*(\+\+|--)\s*([a-zA-Z][\w]*)$|^\s*([a-zA-Z][\w]*)\s*(\+\+|--)$",statement):
                     # ++x or other
+                    
                     self.stacker(statement)
                     return True
                 else:
                     spliting_for_RHS_Eval=statement# TODO Assuming valid
                     operand=None
+                    
             else:
+                if ops_regex:
+                    spliter=[[ops_regex[0][0],ops_regex[0][2]]]
+             
+               
                 temp_spliter=[spliter[0][0],spliter[0][1]]
                 spliter=temp_spliter
+                
                 try:
                     is_float=True if float(spliter[1]) or int(spliter[1]) else False
                 except: 
@@ -342,9 +354,11 @@ class Printer(object):
                     self.stacker_dict[spliter[0]]=str(float(spliter[1]))
                     return True
                 else:
+                    
                     ops=self.ops_extension(statement)
                     if ops!=False:
-                        temp_spliter=re.findall("^\s*([a-zA-Z][\w]*)\s*=\s*(.+)$",statement)
+                        temp_spliter=re.findall("^\s*([a-zA-Z][\w]*)\s*=\s*(.+)$",ops)
+
                         spliting_for_RHS_Eval=temp_spliter[0][1]
                     else:
                         temp_spliter=re.findall("^\s*([a-zA-Z][\w]*)\s*=\s*(.+)$",statement)

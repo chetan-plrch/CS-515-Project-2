@@ -119,8 +119,8 @@ class Tokenizer:
                         self.tokens.append(( token.get_type(), token.get_value() ))
                     self.pos += len(match.group())
                     break
-            else:
-                raise SyntaxError(f"Invalid token at position {self.pos}")
+            # else:
+            #     raise SyntaxError(f"Invalid token at position {self.pos}")
         t = Token('EOF')
         self.tokens.append(( t.get_type(), t.get_value() ))
         return self.tokens

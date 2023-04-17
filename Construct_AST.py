@@ -58,8 +58,8 @@ class Construct_AST:
                 })
 
         while op_stack:
-            if op_stack[-1] == '(':
-                raise SyntaxError('Mismatched parentheses')
+            # if op_stack[-1] == '(':
+            #     raise SyntaxError('Mismatched parentheses')
             operator = op_stack.pop()
             right = ast_stack.pop()
             left = ast_stack.pop()

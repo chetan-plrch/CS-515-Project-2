@@ -406,7 +406,7 @@ class Printer(object):
                 
                 pre_post=t.char_without_type_tokenized_line(pre_post)
                 pre_post=list(map(lambda x: str(x),pre_post))
-                print(pre_post)
+               
                 evalu=ExpressionEvaluation.ExpressionEvaluation()
                 result=evalu.evaluate_expression(pre_post)
                 chetan_ke_wajah.append(str(result))

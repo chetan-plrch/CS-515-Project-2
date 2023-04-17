@@ -1,6 +1,7 @@
 import re
 import Tokenizer
 import ExpressionEvaluation
+import Errors
 # from extras import inbuilt_parser
 # TODO create function which will take out variable and put it to dictionary which acts like independent stack like in os
 # TODO create a function which will print the values of given command line
@@ -405,10 +406,22 @@ class Printer(object):
                 
               
                 pre_post=t.char_without_type_tokenized_line(pre_post)
-                
-                evalu=ExpressionEvaluation.ExpressionEvaluation()
-                result=evalu.evaluate_expression(pre_post)
-                temp_list.append(str(result))
+                try:
+                    evalu=ExpressionEvaluation.ExpressionEvaluation()
+                    result=evalu.evaluate_expression(pre_post)
+                except ZeroDivisionError:
+                    error = 'divide by zero'
+                except Errors.ParseError:
+                    temp_list = ['parse error']
+                    break
+                except SyntaxError:
+                    temp_list = ['parse error']
+                    break
+
+                if error:
+                    temp_list.append(error)
+                else:
+                    temp_list.append(str(result))
             # else:
             #     raise SyntaxError
             

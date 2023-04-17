@@ -39,4 +39,3 @@ for i in range(len(expressions)):
     #   x.assigner(f'a={expressions[i]}')
     #   x.assigner(f'         print a      ')
 
-  

@@ -12,15 +12,15 @@ class Printer(object):
     def __init__(self) -> None:
         self.stacker_dict = {}
 
-    def eprint(self, in_string):
-        if self.in_string == "":
-            raise SyntaxError
-        if re.findall("\s*[1-9]*\s*"):
-            pass  # number
-        if re.findall("\s*([a-bA-Z_])*\s*"):
-            pass
-        if re.findall("\s*[+-*%/\\()]*\s"):
-            pass
+    # def eprint(self, in_string):
+    #     if self.in_string == "":
+    #         raise SyntaxError
+    #     if re.findall("\s*[1-9]*\s*"):
+    #         pass  # number
+    #     if re.findall("\s*([a-bA-Z_])*\s*"):
+    #         pass
+    #     if re.findall("\s*[+-*%/\\()]*\s"):
+    #         pass
 
     def __inside_stack_checker_pre(self, lookup, ops, operand, symbol):
         # TODO add check for operand = constant
@@ -55,6 +55,7 @@ class Printer(object):
         >>> x.stacker("z=-x")
         {'z': 0}
         """
+       
         if symbol == "PRE_INCREMENT" or symbol=="PRE_DECREMENT":
             if ops == "++":
                 if operand in self.stacker_dict:
@@ -67,7 +68,7 @@ class Printer(object):
                 elif lookup in self.stacker_dict:  # To increment the value if already declared previously
                     self.stacker_dict[lookup] = float(self.stacker_dict[lookup[0][0]])+1
                 else:  # To make value 1 if the variable is not declared in it
-                    self.stacker_dict[lookup] = 1
+                    self.stacker_dict[lookup] = float(1)
                 return self.stacker_dict[lookup]
             elif ops == "--":
                 if operand in self.stacker_dict:
@@ -79,7 +80,7 @@ class Printer(object):
                 elif lookup in self.stacker_dict:
                     self.stacker_dict[lookup] = float(self.stacker_dict[lookup[0][0]])-1
                 else:  # To make value 1 if the variable is not declared in it
-                    self.stacker_dict[lookup] = -1
+                    self.stacker_dict[lookup] = float(-1)
                 return self.stacker_dict[lookup]
         elif symbol == "POST_INCREMENT" or symbol=="POST_DECREMENT":
             if ops == "++":
@@ -96,7 +97,7 @@ class Printer(object):
                     self.stacker_dict[lookup] = float(self.stacker_dict[lookup[0][0]])+1
                 else:  # To make value 1 if the variable is not declared in it
                     temp = 0
-                    self.stacker_dict[lookup] = 1
+                    self.stacker_dict[lookup] = float(1)
                 return temp
             elif ops == "--":
                 if operand in self.stacker_dict:
@@ -111,7 +112,7 @@ class Printer(object):
                     self.stacker_dict[lookup] = float(self.stacker_dict[lookup[0][0]])-1
                 else:  # To make value 1 if the variable is not declared in it
                     temp = 0
-                    self.stacker_dict[lookup] = -1
+                    self.stacker_dict[lookup] = float(-1)
                 return temp
         elif symbol == "UNARY":
             if ops == "-":  # unary handling
@@ -287,8 +288,7 @@ class Printer(object):
 
     def ops_extension(self,statement: str):
         """code to handle the ops_extension
-
-        Args:
+ 
             statement (str): this will be the command which will be given in the input
 
         Returns:
@@ -325,13 +325,19 @@ class Printer(object):
     def assigner(self,statement):
         if re.match(f'\s*print\s*(.*)', statement):
             self.printist(statement)
+            return True
         else:
             spliter=re.findall("^\s*([a-zA-Z][\w]*)\s*=\s*(.+)$",statement)
             if not statement.strip():
                 return False
           
             if not spliter:
-                raise SyntaxError
+                if re.match("^\s*(\+\+|--)\s*([a-zA-Z][\w]*)$|^\s*([a-zA-Z][\w]*)\s*(\+\+|--)$",statement):
+                    self.stacker(statement)
+                    return True
+                else:
+                    spliting_for_RHS_Eval=statement# Assuming valid
+                    operand=None
             else:
                 temp_spliter=[spliter[0][0],spliter[0][1]]
                 spliter=temp_spliter
@@ -342,6 +348,7 @@ class Printer(object):
                 if is_float:
             
                     self.stacker_dict[spliter[0]]=str(float(spliter[1]))
+                    return True
                 else:
                     ops=self.ops_extension(statement)
                     if ops!=False:
@@ -351,19 +358,23 @@ class Printer(object):
                         temp_spliter=re.findall("^\s*([a-zA-Z][\w]*)\s*=\s*(.+)$",statement)
                         spliting_for_RHS_Eval=temp_spliter[0][1]
                         # spliting_for_RHS_Eval=list(map(lambda x: x.strip(),spliting_for_RHS_Eval))
-                    operand=temp_spliter[0][0]
-                    t= Tokenizer.Tokenizer(spliting_for_RHS_Eval)
-                    list_of_tokens=t.char_with_type_tokenized_lines()
-                    pre_post=self.token_helper_pre_post(list_of_tokens[0])
-                
-                    list(pre_post)
-                    pre_post=t.char_without_type_tokenized_line(pre_post)
-                    
-                    evalu=ExpressionEvaluation.ExpressionEvaluation()
-                    result=evalu.evaluate_expression(pre_post)
-                    self.stacker_dict[operand]=result
-                    
-                    return(result)
+            
+                operand=temp_spliter[0][0]
+                print(spliting_for_RHS_Eval)
+            t= Tokenizer.Tokenizer(spliting_for_RHS_Eval)
+            list_of_tokens=t.char_with_type_tokenized_lines()
+            pre_post=self.token_helper_pre_post(list_of_tokens[0])
+        
+            list(pre_post)
+            pre_post=t.char_without_type_tokenized_line(pre_post)
+            
+            evalu=ExpressionEvaluation.ExpressionEvaluation()
+            result=evalu.evaluate_expression(pre_post)
+            if operand:
+                self.stacker_dict[operand]=result
+            else:
+                pass
+            return(result)
                     # TODO create the else
     
     def get_print_items(self,line):

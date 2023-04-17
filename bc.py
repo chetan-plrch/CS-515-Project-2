@@ -1,11 +1,17 @@
 import Tokenizer
 import Printer
+import sys
 
-
-line = input()
-t = Tokenizer.Tokenizer(line)
-Lines = t.text
+t = Tokenizer.Tokenizer(sys.stdin.read())
+prgm = t.text
+lines = prgm.split('\n')
 
 x = Printer.Printer()
-x.assigner(Lines)
+for line in lines:
+  x.assigner(line)
+
+
+
+
+
 

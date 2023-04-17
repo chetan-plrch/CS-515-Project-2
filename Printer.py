@@ -55,46 +55,55 @@ class Printer(object):
         >>> x.stacker("z=-x")
         {'z': 0}
         """
-       
-        if symbol == "PRE_INCREMENT" or symbol=="PRE_DECREMENT":
+
+        if symbol == "PRE_INCREMENT" or symbol == "PRE_DECREMENT":
             if ops == "++":
                 if operand in self.stacker_dict:
-                    self.stacker_dict[operand] = float(self.stacker_dict[operand])+1
+                    self.stacker_dict[operand] = float(
+                        self.stacker_dict[operand])+1
                     if operand == lookup:
                         pass
                     else:
                         # can be redunant
-                        self.stacker_dict[lookup] = float(self.stacker_dict[operand])
+                        self.stacker_dict[lookup] = float(
+                            self.stacker_dict[operand])
                 elif lookup in self.stacker_dict:  # To increment the value if already declared previously
-                    self.stacker_dict[lookup] = float(self.stacker_dict[lookup[0][0]])+1
+                    self.stacker_dict[lookup] = float(
+                        self.stacker_dict[lookup[0][0]])+1
                 else:  # To make value 1 if the variable is not declared in it
                     self.stacker_dict[lookup] = float(1)
                 return self.stacker_dict[lookup]
             elif ops == "--":
                 if operand in self.stacker_dict:
-                    self.stacker_dict[operand] = float(self.stacker_dict[operand])-1
+                    self.stacker_dict[operand] = float(
+                        self.stacker_dict[operand])-1
                     if operand == lookup:
                         pass
                     else:
-                        self.stacker_dict[lookup] = float(self.stacker_dict[operand])
+                        self.stacker_dict[lookup] = float(
+                            self.stacker_dict[operand])
                 elif lookup in self.stacker_dict:
-                    self.stacker_dict[lookup] = float(self.stacker_dict[lookup[0][0]])-1
+                    self.stacker_dict[lookup] = float(
+                        self.stacker_dict[lookup[0][0]])-1
                 else:  # To make value 1 if the variable is not declared in it
                     self.stacker_dict[lookup] = float(-1)
                 return self.stacker_dict[lookup]
-        elif symbol == "POST_INCREMENT" or symbol=="POST_DECREMENT":
+        elif symbol == "POST_INCREMENT" or symbol == "POST_DECREMENT":
             if ops == "++":
                 if operand in self.stacker_dict:
                     temp = self.stacker_dict[operand]
-                    self.stacker_dict[operand] = float(self.stacker_dict[operand])+1
+                    self.stacker_dict[operand] = float(
+                        self.stacker_dict[operand])+1
                     if operand == lookup:
                         pass
                     else:
                         # can be redunant
-                        self.stacker_dict[lookup] = float(self.stacker_dict[operand])
+                        self.stacker_dict[lookup] = float(
+                            self.stacker_dict[operand])
                 elif lookup in self.stacker_dict:  # To increment the value if already declared previously
                     temp = self.stacker_dict[operand]
-                    self.stacker_dict[lookup] = float(self.stacker_dict[lookup[0][0]])+1
+                    self.stacker_dict[lookup] = float(
+                        self.stacker_dict[lookup[0][0]])+1
                 else:  # To make value 1 if the variable is not declared in it
                     temp = 0
                     self.stacker_dict[lookup] = float(1)
@@ -102,14 +111,17 @@ class Printer(object):
             elif ops == "--":
                 if operand in self.stacker_dict:
                     temp = self.stacker_dict[operand]
-                    self.stacker_dict[operand] = float(self.stacker_dict[operand])-1
+                    self.stacker_dict[operand] = float(
+                        self.stacker_dict[operand])-1
                     if operand == lookup:
                         pass
                     else:
-                        self.stacker_dict[lookup] = float(self.stacker_dict[operand])
+                        self.stacker_dict[lookup] = float(
+                            self.stacker_dict[operand])
                 elif lookup in self.stacker_dict:
                     temp = self.stacker_dict[operand]
-                    self.stacker_dict[lookup] = float(self.stacker_dict[lookup[0][0]])-1
+                    self.stacker_dict[lookup] = float(
+                        self.stacker_dict[lookup[0][0]])-1
                 else:  # To make value 1 if the variable is not declared in it
                     temp = 0
                     self.stacker_dict[lookup] = float(-1)
@@ -118,7 +130,8 @@ class Printer(object):
             if ops == "-":  # unary handling
                 if operand in self.stacker_dict:
                     # if lookup in self.stacker_dict:# To increment the value if already declared previously
-                    self.stacker_dict[lookup] = float(self.stacker_dict[operand])*-1
+                    self.stacker_dict[lookup] = float(
+                        self.stacker_dict[operand])*-1
                 else:  # To make value 1 if the variable is not declared in it
                     self.stacker_dict[lookup] = 0
                     # BUG not working
@@ -157,7 +170,6 @@ class Printer(object):
                 operand = after_equals[0][1]
                 result = self.__inside_stack_checker_pre(
                     x[0][0], ops, operand, "PRE_INCREMENT")
-             
 
             # TODO create a code for handling post
             elif re.match("^\s*([a-zA-Z][\w]*)\s*(\+\+|--)$", x[0][1]):
@@ -205,31 +217,31 @@ class Printer(object):
                         lookup, ops, operand, "POST_INCREMENT")
             return result
 
-    def token_helper_of_helper_unary(self,count,list_of_tokens):
-                list_of_tokens.insert(count+1,("LPAREN","("))
-                list_of_tokens.insert(count+2,("NUMBER","-1"))
-                
-                list_of_tokens.insert(count+3,("MULTIPLY","*"))
-                
-                list_of_tokens.pop(count)
-                
-                if list_of_tokens[count+3][0]=="LPAREN":
-                    temp_count=0
-                    index_var=0
-                    for index,i in enumerate(list_of_tokens[count+3:]):
-                        if i[0]=="LPAREN":
-                            temp_count+=1
-                        if i[0]=="RPAREN":
-                            temp_count-=1
-                        if temp_count==0:
-                            index_var=index
-                            break
-                        
-                    list_of_tokens.insert(count+3+index_var,("RPAREN",")"))
-                else:
-                    list_of_tokens.insert(count+4,("RPAREN",")"))
-                return list_of_tokens
-        
+    def token_helper_of_helper_unary(self, count, list_of_tokens):
+        list_of_tokens.insert(count+1, ("LPAREN", "("))
+        list_of_tokens.insert(count+2, ("NUMBER", "-1"))
+
+        list_of_tokens.insert(count+3, ("MULTIPLY", "*"))
+
+        list_of_tokens.pop(count)
+
+        if list_of_tokens[count+3][0] == "LPAREN":
+            temp_count = 0
+            index_var = 0
+            for index, i in enumerate(list_of_tokens[count+3:]):
+                if i[0] == "LPAREN":
+                    temp_count += 1
+                if i[0] == "RPAREN":
+                    temp_count -= 1
+                if temp_count == 0:
+                    index_var = index
+                    break
+
+            list_of_tokens.insert(count+3+index_var, ("RPAREN", ")"))
+        else:
+            list_of_tokens.insert(count+4, ("RPAREN", ")"))
+        return list_of_tokens
+
     def token_helper_pre_post(self, list_of_tokens):
         """
         A function which will help the tokenizer.py
@@ -242,190 +254,194 @@ class Printer(object):
         # while(count<len(list_of_tokens)):
         #      print(list_of_tokens[count])
         while (count < len(list_of_tokens)):
-            if list_of_tokens[count][0] == "POST_INCREMENT" or list_of_tokens[count][0]=="POST_DECREMENT":
+            if list_of_tokens[count][0] == "POST_INCREMENT" or list_of_tokens[count][0] == "POST_DECREMENT":
                 ops = list_of_tokens[count][1][1:]
                 lookup = list_of_tokens[count][1][0]
                 operand = lookup
-                operation_system="POST_DECREMENT" if ops=="--" else "POST_INCREMENT"
+                operation_system = "POST_DECREMENT" if ops == "--" else "POST_INCREMENT"
                 result = self.__inside_stack_checker_pre(
                     lookup, ops, operand, operation_system)
-                list_of_tokens[count]=("NUMBER",result)
+                list_of_tokens[count] = ("NUMBER", result)
 
-            if list_of_tokens[count][0]=="PRE_INCREMENT" or list_of_tokens[count][0]=="PRE_DECREMENT":
-                ops=list_of_tokens[count][1]
-                lookup=list_of_tokens[count+1][1]
-                operand=lookup
-                operation_system=list_of_tokens[count][0]
+            if list_of_tokens[count][0] == "PRE_INCREMENT" or list_of_tokens[count][0] == "PRE_DECREMENT":
+                ops = list_of_tokens[count][1]
+                lookup = list_of_tokens[count+1][1]
+                operand = lookup
+                operation_system = list_of_tokens[count][0]
                 result = self.__inside_stack_checker_pre(
                     lookup, ops, operand, operation_system)
                 list_of_tokens.pop(count)
-                list_of_tokens[count]=("NUMBER",result)
-            if list_of_tokens[count][0]=="MINUS":
-                # TODO case 1 : when there is number in front of the unary 
+                list_of_tokens[count] = ("NUMBER", result)
+            if list_of_tokens[count][0] == "MINUS":
+                # TODO case 1 : when there is number in front of the unary
                 # TODO case 2 : when there is a LPAREN in front of the unary
                 # Case 1 : if there is + in front of unary convert + into -
-                # and if there is - infront of then convert into + 
+                # and if there is - infront of then convert into +
                 # if list_of_tokens[count+1][0]=="MINUS":
-                if count==0:
-                    list_of_tokens=self.token_helper_of_helper_unary(count,list_of_tokens)
-                elif list_of_tokens[count-1][0] in ['POWER','MULTIPLY','DIVIDE','MODULO','PLUS','MINUS','CONJUNCTION','DISJUNCTION']:
-                    list_of_tokens=self.token_helper_of_helper_unary(count,list_of_tokens)
-                elif list_of_tokens[count-1][0]=="LPAREN":
-                    list_of_tokens=self.token_helper_of_helper_unary(count,list_of_tokens)
-                    
+                if count == 0:
+                    list_of_tokens = self.token_helper_of_helper_unary(
+                        count, list_of_tokens)
+                elif list_of_tokens[count-1][0] in ['POWER', 'MULTIPLY', 'DIVIDE', 'MODULO', 'PLUS', 'MINUS', 'CONJUNCTION', 'DISJUNCTION']:
+                    list_of_tokens = self.token_helper_of_helper_unary(
+                        count, list_of_tokens)
+                elif list_of_tokens[count-1][0] == "LPAREN":
+                    list_of_tokens = self.token_helper_of_helper_unary(
+                        count, list_of_tokens)
 
-            if list_of_tokens[count][0]=="NAME":
+            if list_of_tokens[count][0] == "NAME":
                 if list_of_tokens[count][1] in self.stacker_dict.keys():
-                    tempVar=self.stacker_dict[list_of_tokens[count][1]]
+                    tempVar = self.stacker_dict[list_of_tokens[count][1]]
                 else:
-                    tempVar=0
-                list_of_tokens[count]=("NUMBER",str(tempVar))
-                    # list_of_tokens.pop(count)
+                    tempVar = 0
+                list_of_tokens[count] = ("NUMBER", str(tempVar))
+                # list_of_tokens.pop(count)
             count = count+1
-        return(list_of_tokens)
-    
- 
+        return (list_of_tokens)
 
-    def ops_extension(self,statement: str):
+    def ops_extension(self, statement: str):
         """code to handle the ops_extension
- 
+
             statement (str): this will be the command which will be given in the input
 
         Returns:
             _type_: either a the new statement or False ( False means the pattern did not match )
         """
 
-        if re.match("^\s*([a-zA-Z][\w]*)\s*([\^|\+\-*\\|\%|!]{1}|[&&|\|\|]{2})=(.+)$",statement):
-            op_manager=re.findall("^\s*([a-zA-Z][\w]*)\s*([\^|\+\-*\\|\%|!]{1}|[&&|\|\|]{2})=(.+)$",statement)
-            res_value=op_manager[0][0]# LHS value
-            operator=op_manager[0][1]# RHS Value
-            new_statment=statement
-            
+        if re.match("^\s*([a-zA-Z][\w]*)\s*([\^|\+\-*\\|\%|!]{1}|[&&|\|\|]{2})=(.+)$", statement):
+            op_manager = re.findall(
+                "^\s*([a-zA-Z][\w]*)\s*([\^|\+\-*\\|\%|!]{1}|[&&|\|\|]{2})=(.+)$", statement)
+            res_value = op_manager[0][0]  # LHS value
+            operator = op_manager[0][1]  # RHS Value
+            new_statment = statement
+
             # removing previous values
 
             # Sanitizing the LHS
-            for index,i in enumerate(statement):
-                if i==operator:
-                    position_at=index
-                    new_statment=statement[:position_at]+statement[position_at+1:]
+            for index, i in enumerate(statement):
+                if i == operator:
+                    position_at = index
+                    new_statment = statement[:position_at] + \
+                        statement[position_at+1:]
                     break
 
             # Adding the operation to RHS
 
-            # Adding parenthesis, res_value and operator 
-            for index,i in enumerate(new_statment):
-                if i=="=":
-                    position_at=index
-                    new_statment=new_statment[:position_at+1]+" "+res_value+" "+operator+" "+"("+new_statment[position_at+1:]+")"
+            # Adding parenthesis, res_value and operator
+            for index, i in enumerate(new_statment):
+                if i == "=":
+                    position_at = index
+                    # TODO check why \ in below statement
+                    new_statment = new_statment[:position_at+1]+" "+res_value + \
+                        " "+operator+" "+"("+new_statment[position_at+1:]+")"
                     return new_statment
 
-           
-        return False # if ops is not required
+        return False  # if ops is not required
 
-    def assigner(self,statement):
+    def assigner(self, statement):
+        
         if re.match(f'\s*print\s*(.*)', statement):
             self.printist(statement)
             return True
         else:
-            spliter=re.findall("^\s*([a-zA-Z][\w]*)\s*=\s*(.+)$",statement)
+            spliter = re.findall("^\s*([a-zA-Z][\w]*)\s*=\s*(.+)$", statement)
             if not statement.strip():
                 return False
-          
+
             if not spliter:
-                if re.match("^\s*(\+\+|--)\s*([a-zA-Z][\w]*)$|^\s*([a-zA-Z][\w]*)\s*(\+\+|--)$",statement):
+                if re.match("^\s*(\+\+|--)\s*([a-zA-Z][\w]*)$|^\s*([a-zA-Z][\w]*)\s*(\+\+|--)$", statement):
                     self.stacker(statement)
                     return True
                 else:
-                    spliting_for_RHS_Eval=statement# Assuming valid
-                    operand=None
+                    spliting_for_RHS_Eval = statement  # Assuming valid
+                    operand = None
             else:
-                temp_spliter=[spliter[0][0],spliter[0][1]]
-                spliter=temp_spliter
+                temp_spliter = [spliter[0][0], spliter[0][1]]
+                spliter = temp_spliter
                 try:
-                    is_float=True if float(spliter[1]) or int(spliter[1]) else False
-                except: 
-                    is_float=False
+                    is_float = True if float(spliter[1]) or int(
+                        spliter[1]) else False
+                except:
+                    is_float = False
+                
                 if is_float:
-            
-                    self.stacker_dict[spliter[0]]=str(float(spliter[1]))
+                    self.stacker_dict[spliter[0]] = float(spliter[1])
                     return True
                 else:
-                    ops=self.ops_extension(statement)
-                    if ops!=False:
-                        temp_spliter=re.findall("^\s*([a-zA-Z][\w]*)\s*=\s*(.+)$",statement)
-                        spliting_for_RHS_Eval=temp_spliter[0][1]
+                    ops = self.ops_extension(statement)
+                    if ops != False:
+                        temp_spliter = re.findall(
+                            "^\s*([a-zA-Z][\w]*)\s*=\s*(.+)$", statement)
+                        spliting_for_RHS_Eval = temp_spliter[0][1]
                     else:
-                        temp_spliter=re.findall("^\s*([a-zA-Z][\w]*)\s*=\s*(.+)$",statement)
-                        spliting_for_RHS_Eval=temp_spliter[0][1]
+                        temp_spliter = re.findall(
+                            "^\s*([a-zA-Z][\w]*)\s*=\s*(.+)$", statement)
+                        spliting_for_RHS_Eval = temp_spliter[0][1]
                         # spliting_for_RHS_Eval=list(map(lambda x: x.strip(),spliting_for_RHS_Eval))
-            
-                operand=temp_spliter[0][0]
-               
-            t= Tokenizer.Tokenizer(spliting_for_RHS_Eval)
-            list_of_tokens=t.char_with_type_tokenized_lines()
-            pre_post=self.token_helper_pre_post(list_of_tokens[0])
-        
-            list(pre_post)
-            pre_post=t.char_without_type_tokenized_line(pre_post)
-            
-            evalu=ExpressionEvaluation.ExpressionEvaluation()
-            result=evalu.evaluate_expression(pre_post)
+
+                operand = temp_spliter[0][0]
+
+            t = Tokenizer.Tokenizer(spliting_for_RHS_Eval)
+            list_of_tokens = t.char_with_type_tokenized_lines()
+            pre_post = self.token_helper_pre_post(list_of_tokens[0])
+
+         
+            pre_post = t.char_without_type_tokenized_line(pre_post)
+            pre_post = list(map(lambda x: str(x), pre_post))
+            evalu = ExpressionEvaluation.ExpressionEvaluation()
+            result = evalu.evaluate_expression(pre_post)
             if operand:
-                self.stacker_dict[operand]=result
+                self.stacker_dict[operand] = result
             else:
                 pass
-            return(result)
-                    # TODO create the else
-    
-    def get_print_items(self,line):
+            return (result)
+            # TODO create the else
+
+    def get_print_items(self, line):
         m = re.match(f'\s*print\s*(.*)', line)
         variables = m.group(1).split(',')
-       
+
         variables = list(map(lambda variable: variable.strip(), variables))
-        chetan_ke_wajah=[]
+        chetan_ke_wajah = []
         for i in variables:
             try:
                 float(i)
-                is_numeric=True
+                is_numeric = True
             except:
-                is_numeric=False
-            if is_numeric==True:
+                is_numeric = False
+            if is_numeric == True:
                 # Meaning it's a constant
                 chetan_ke_wajah.append(str(float(i)))
             elif re.match("^[A-Za-z][A-Za-z0-9_]*$", i):
                 # TODO: Handle if the identifier contains space: throw error
                 if i in self.stacker_dict.keys():
-                    chetan_ke_wajah.append(self.stacker_dict[i]) 
+                    chetan_ke_wajah.append(self.stacker_dict[i])
                 else:
                     chetan_ke_wajah.append(0)
-            else : # TODO check this
-                t= Tokenizer.Tokenizer(i)
-                list_of_tokens=t.char_with_type_tokenized_lines()
-                pre_post=self.token_helper_pre_post(list_of_tokens[0])
-                
-                
-                pre_post=t.char_without_type_tokenized_line(pre_post)
-                pre_post=list(map(lambda x: str(x),pre_post))
-               
-                evalu=ExpressionEvaluation.ExpressionEvaluation()
-                result=evalu.evaluate_expression(pre_post)
+            else:  # TODO check this
+                t = Tokenizer.Tokenizer(i)
+                list_of_tokens = t.char_with_type_tokenized_lines()
+                pre_post = self.token_helper_pre_post(list_of_tokens[0])
+
+                pre_post = t.char_without_type_tokenized_line(pre_post)
+                pre_post = list(map(lambda x: str(x), pre_post))
+
+                evalu = ExpressionEvaluation.ExpressionEvaluation()
+                result = evalu.evaluate_expression(pre_post)
                 chetan_ke_wajah.append(str(result))
             # else:
             #     raise SyntaxError
-            
+
         return chetan_ke_wajah
 
-            
-        # Any statment is an expression if it has an operator operator 
+        # Any statment is an expression if it has an operator operator
         return variables
-    
-    def printist(self,statement):
-        list_of_variable=self.get_print_items(statement)
-     
-        list_of_variable=list(map(lambda x: str(x),list_of_variable))
+
+    def printist(self, statement):
+        list_of_variable = self.get_print_items(statement)
+
+        list_of_variable = list(map(lambda x: str(x), list_of_variable))
 
         print(" ".join(list_of_variable))
-
 
 
 # creating a helper function which will be integrated in the project2.py
@@ -433,5 +449,5 @@ class Printer(object):
 
 # DONE Extension
 # I need to add brackets at 0 and -1
-# I need add the op at 0 
+# I need add the op at 0
 # I need to add the LHS

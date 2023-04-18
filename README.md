@@ -467,7 +467,7 @@ We create a tree representation of AST in order to debug better
 
 
 ## Bug that we could not solve 
-The binary not is having some problems, and there is less time to solve this as a result, can't commply with the standards of it. BUT rest of the code and extensions
+The binary not (boolean negation - ! - operator) is having some problems, and there was less time to solve this as a result, so we didn't meet the standard for it's evaluation. BUT rest of the code and all other functionality including extensions are working really well.
 are working fine
 
 ## An example of a difficult issue or bug and how you resolved
@@ -493,7 +493,7 @@ Steps in evaluation:
 ## Example of one of the extension:
 
 ### Comments:
-# These segments of strings contains all possible formats of comments that 
+##### These segments of strings contains all possible formats of comments 
 ```
 INPUT:
 

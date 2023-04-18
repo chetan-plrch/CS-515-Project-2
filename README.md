@@ -473,3 +473,45 @@ are working fine
 2. Op-equals
 3. Relational Operations
 4. Boolean operations
+
+
+
+## Example of :
+### Comments: 
+
+# These segments of strings contains all possible formats of comments that 
+
+
+INPUT:
+
+segment_2 = '''
+y = 1 /* Pichu */ +5
+y = 1 /* Bulbasur */
+y = 1 /* Doremon
+*/ 
+a= 5
+print y
+/* jo jeeta wahi sikandar */
+/*mumbo jumbo
+*/
+  /* Kitresu
+     */
+
+
+OUTPUT:
+1
+
+INPUT: 
+/*y = 0
+z = x + (x / y * 6 - 5)
+jhfkdshfdg
+df;g
+fdgjdfhghkjdfg
+dfg dfgdfgdf / 
+'''
+
+OUTPUT 
+parse error
+
+
+### Op-equals

@@ -351,10 +351,8 @@ class Printer(object):
                 except: 
                     is_float=False
                 if is_float and not ops_regex:
-                    if spliter[0] in self.stacker_dict.keys():
-                        self.stacker_dict[spliter[0]]=str(float(self.stacker_dict[spliter[0]])+float(spliter[1]))
-                    else:
-                        self.stacker_dict[spliter[0]]=str(float(spliter[1]))
+                   
+                    self.stacker_dict[spliter[0]]=str(float(spliter[1]))
                     return True
                    
                 else:

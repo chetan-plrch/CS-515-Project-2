@@ -26,10 +26,24 @@ In Linux :
 <code> python3 test_extras.py</code>
 
 ## Flow Logic
-![python calculator drawio](https://user-images.githubusercontent.com/22773916/232634898-9fde6735-df71-4703-bb36-4fbee28dead6.png)
+
+![python calculator drawio (1)](https://user-images.githubusercontent.com/22773916/232635331-b0f37285-410d-4cd0-bf60-c6f7bb21ff13.png)
+
+
+## Extra Work 
+We create a tree representation of AST in order to debug better
+![tree](https://user-images.githubusercontent.com/22773916/232636046-85f3c09b-7dbc-465b-a5d9-c69d5e3662cb.png)
+
+
 
 
 ## Bugs
 The binary not is having some problems, and there is less time to solve this as a result, can't commply with the standards of it. BUT rest of the code and extensions
 are working fine
 
+
+## Extensions
+1. Comment
+2. Op-equals
+3. Relational Operations
+4. Boolean operations

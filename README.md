@@ -28,6 +28,11 @@ In Linux :
 # How we tested our code.
 
 We have build scripts to test all the cases that would be required to reach a logical conclusion for the correctness of our program
+
+Test scripts that can be referred in the codebase are test_increment_decrement.py, test_relation.py, test_parse.py, test_extensions.py, test_bc.py, ops_extensions.py. All these scripts uses exhaustive list of expressions that we have run through our program and compare the value that our program generates with the value of what bc generates.
+
+Below are the categories of concepts and expression types that we have tested by using listed expression, in several cases we have ran through couple of 100's of expressions by running a script and compared value with bc programmatically with a shell script
+
 1. Associativity and precedence
     * Precedence ordering is from loosest to tightest:
     * \+ and - operators, left associative
@@ -448,7 +453,6 @@ We wrote a print print_ast (in Construct_AST class) that helps us visualize any 
         │   ┌── 0
         └── >=
             └── 0
-
 ```
 
 ## Flow Logic
@@ -462,26 +466,35 @@ We create a tree representation of AST in order to debug better
 
 
 
-
-## Bugs
+## Bug that we could not solve 
 The binary not is having some problems, and there is less time to solve this as a result, can't commply with the standards of it. BUT rest of the code and extensions
 are working fine
 
+## An example of a difficult issue or bug and how you resolved
+1. We were initially confused with increment and decrement operators and evaluated severally expression manually and did big of reading to understand it completely
+2. In that process, what we got to know that unary increment and decrement has the highest precedence.
+3. The technique we used it is by pre-computing unary increment and decrement values and substituting them in the expression before computing ast and doing final evaluation
+Eg:
+```
+Expression: ++a + b-- * c++ - d + ++e
+Steps in evaluation:
+1. After pre-computation: 1 + 0 * 0 - 0 + 1
+2. AST is generated according to associativity and precedence
+3. Evaluation is called on the ast generated on (1 + 0 * 0 - 0 + 1) and final result is computed
+```
 
-## Extensions
+## Extensions that we have implmented
 1. Comment
 2. Op-equals
 3. Relational Operations
 4. Boolean operations
 
 
+## Example of one of the extension:
 
-## Example of :
-### Comments: 
-
+### Comments:
 # These segments of strings contains all possible formats of comments that 
-
-
+```
 INPUT:
 
 segment_2 = '''
@@ -512,6 +525,4 @@ dfg dfgdfgdf /
 
 OUTPUT 
 parse error
-
-
-### Op-equals
+```
